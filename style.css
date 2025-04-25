@@ -1,0 +1,84 @@
+@media (orientation: landscape) and (max-height: 600px){
+    html {
+      font-size: 60%;
+    }
+  }
+
+/* шрифты */
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('./assets/fonts/ofont.ru_Itim.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'MyFont', sans-serif;
+}
+
+.font-header {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.font-pale {
+    font-size: 1.5rem;
+    color: rgb(150, 150, 150)
+}
+
+.font-main {
+    font-size: 2.5rem;
+}
+
+/* шрифты */
+
+/* задний фон */
+
+.app-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-image: url("./assets/imgs/background.jpg");
+    background-size: cover;
+    opacity: 0.1;
+}
+
+/* задний фон */
+
+/* отображение экранов */
+
+.screen {
+    display: none;
+    /* можно анимацию выхода тоже */
+}
+.screen.active {
+    display: flex;
+    /* анимация появления */
+}
+
+/* отображение экранов */
+
+/* mainScreen */
+
+.main {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+}
+
+h1 {
+    margin: 6rem;
+}
+
+.menu-item {
+    margin: 1rem;
+}

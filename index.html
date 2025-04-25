@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-wrapper" id="appWrapperJs">
+        <div class="background"></div>
+        <div class="screen main active" id="main-screen" data-screen="mainJS">
+            <h1 class="font-header">Игра</h1>
+            <p class="font-pale">Выберите уровень</p>
+            <p class="menu-item font-main" onclick="goToScreen('level1')">Легкий</p>
+            <p class="menu-item font-main" onclick="goToScreen('level2')">Нормальный</p>
+            <p class="menu-item font-main" onclick="goToScreen('level3')">Сложный</p>
+        </div>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
