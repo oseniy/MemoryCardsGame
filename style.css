@@ -1,6 +1,5 @@
 
 /* шрифты */
-
 @font-face {
     font-family: 'MyFont';
     src: url('./assets/fonts/ofont.ru_Itim.ttf') format('truetype');
@@ -13,23 +12,25 @@ body {
 }
 
 .font-header {
+    cursor: default;
     font-size: clamp(2.5rem, 8vmin, 5rem);
     font-weight: bold;
 }
 
 .font-pale {
+    cursor: default;
     font-size: clamp(1rem, 3vmin, 1.8rem);
     color: rgb(150, 150, 150)
 }
 
 .font-main {
+    cursor: default;
     font-size: clamp(1.5rem, 5vmin, 3rem);
 }
-
 /* шрифты */
 
-/* задний фон */
 
+/* задний фон */
 .app-wrapper {
     width: 100vw;
     height: 100vh;
@@ -42,28 +43,59 @@ body {
     width: 100vw;
     height: 100vh;
     position: absolute;
+    z-index: -1;
     background-image: url("./assets/imgs/background.jpg");
     background-size: cover;
     opacity: 0.1;
 }
-
 /* задний фон */
 
-/* отображение экранов */
 
+/* отображение экранов */
 .screen {
+    width: 100vw;
+    height: 100vh;
     display: none;
-    /* можно анимацию выхода тоже */
 }
 .screen.active {
     display: flex;
-    /* анимация появления */
 }
 
-/* отображение экранов */
+/* анимация */
+@keyframes slideOutLeft {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(10%) skewX(10deg);
+    }
+    100% {
+        transform: translateX(-100%) skewX(-60deg);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%) skewX(-60deg);
+    }
+    60% {
+        transform: skewX(0deg);
+    }
+    100% {
+        transform: translateX(0) skewX(0deg);
+    }
+}
+
+.screen.slide-out {
+    animation: slideOutLeft 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) forwards;
+}
+
+.screen.slide-in {
+    animation: slideInRight 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) forwards;
+}
+/* анимация */
 
 /* mainScreen */
-
 .main {
     flex-direction: column;
     justify-content: center;
@@ -76,8 +108,25 @@ h1 {
 
 .menu-item {
     margin: clamp(0.5rem, 2vmin, 1.25rem);
+    cursor: pointer;
 }
+/* mainScreen */
 
+/* levelScreen */
+.level {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+}
+.menu-item {
+    margin: clamp(0.5rem, 2vmin, 1.25rem);
+}
+/* levelScreen */
+
+/* отображение экранов */
+
+
+/* медиа-запросы */
 @media (orientation: portrait) {
     .font-header {
         font-size: clamp(3.75rem, 12vmin, 3.75rem);
@@ -95,3 +144,31 @@ h1 {
         margin: clamp(0.75rem, 3vmin, 0.94rem);
     }
 }
+
+/* анимация */
+@media (max-aspect-ratio: 2/3) {
+    @keyframes slideOutLeft {
+        0% {
+            transform: translateX(0);
+        }
+        20% {
+            transform: translateX(10%) skewX(10deg);
+        }
+        100% {
+            transform: translateX(-200%) skewX(-60deg);
+        }
+    }
+    
+    @keyframes slideInRight {
+        0% {
+            transform: translateX(100%) skewX(-50deg);
+        }
+        60% {
+            transform: skewX(0deg);
+        }
+        100% {
+            transform: translateX(0) skewX(0deg);
+        }
+    }
+}
+/* анимация */
