@@ -1,6 +1,6 @@
 function switchScreen(nextScreen) {
     const current = document.querySelector('.active');
-    const next = document.querySelector(`[data-screen="${nextScreen}"]`);
+    const next = document.getElementById(`${nextScreen}`);
 
     current.classList.add('slide-out');
     current.addEventListener('animationend', () => {
