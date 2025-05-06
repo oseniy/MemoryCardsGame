@@ -9,10 +9,11 @@
 
 body {
     font-family: 'MyFont', sans-serif;
+    text-align: center;
+    cursor: default;
 }
 
 .font-header {
-    cursor: default;
     font-size: clamp(2.5rem, 8vmin, 5rem);
     font-weight: bold;
 }
@@ -95,6 +96,24 @@ body {
 }
 /* анимация */
 
+
+/* items */
+.btn {
+    margin: clamp(0.5rem, 2vmin, 1.25rem);
+    transition: transform 0.2s ease;
+}
+
+.btn:hover {
+    cursor: pointer;
+    transform: scale(0.95);
+}
+
+.text-item {
+    margin: clamp(0.5rem, 2vmin, 1.25rem); 
+}
+/* items */
+
+
 /* mainScreen */
 .main {
     flex-direction: column;
@@ -104,11 +123,6 @@ body {
 
 h1 {
     margin: clamp(4rem, 12vmin, 7.5rem);
-}
-
-.menu-item {
-    margin: clamp(0.5rem, 2vmin, 1.25rem);
-    cursor: pointer;
 }
 /* mainScreen */
 

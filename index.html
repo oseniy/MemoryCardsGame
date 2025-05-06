@@ -11,20 +11,23 @@
     <div class="app-wrapper">
         <div class="background"></div>
         <div class="screen main active" id="mainJS">
-            <h1 class="font-header">Игра</h1>
+            <h1 class="font-header">Ёжки-мышки</h1>
             <p class="font-pale">Выберите уровень</p>
-            <p class="menu-item font-main" onclick="switchScreen('levelEasyJS')">Легкий</p>
-            <p class="menu-item font-main" onclick="switchScreen('levelMediumJS')">Средний</p>
-            <p class="menu-item font-main" onclick="switchScreen('levelHardJS')">Сложный</p>
+            <p class="btn font-main" onclick="switchScreen('levelEasyJS')">Легкий</p>
+            <p class="btn font-main" onclick="switchScreen('levelMediumJS')">Средний</p>
+            <p class="btn font-main" onclick="switchScreen('levelHardJS')">Сложный</p>
         </div>
         <div class="screen level" id="levelEasyJS">
-            <p class="menu-item font-main" onclick="switchScreen('mainJS')">Легкий</p>
+            <div class="upper-text-container">
+                <p class=".text-item font-main" onclick="switchScreen('mainJS')">Ходов: 12</p>
+                <p class="btn font-main" onclick="switchScreen('mainJS')">Легкий</p>
+            </div>
         </div>
         <div class="screen level" id="levelMediumJS">
-            <p class="menu-item font-main" onclick="switchScreen('mainJS')">Средний</p>
+            <p class="btn font-main" onclick="switchScreen('mainJS')">Средний</p>
         </div>
         <div class="screen level" id="levelHardJS">
-            <p class="menu-item font-main" onclick="switchScreen('mainJS')">Сложный</p>
+            <p class="btn font-main" onclick="switchScreen('mainJS')">Сложный</p>
         </div>
     </div>
     <script src="app.js"></script>
