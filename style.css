@@ -54,12 +54,12 @@ body {
 
 /* отображение экранов */
 .screen {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: none;
 }
-.screen.active {
-    display: flex;
+.active {
+    display: flex !important;
 }
 
 /* анимация */
@@ -71,7 +71,7 @@ body {
         transform: translateX(10%) skewX(10deg);
     }
     100% {
-        transform: translateX(-100%) skewX(-60deg);
+        transform: translateX(-100%) skewX(-30deg);
     }
 }
 
@@ -87,20 +87,22 @@ body {
     }
 }
 
-.screen.slide-out {
+.slide-out {
     animation: slideOutLeft 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) forwards;
 }
 
-.screen.slide-in {
+.slide-in {
     animation: slideInRight 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) forwards;
 }
 /* анимация */
-
 
 /* items */
 .btn {
     margin: clamp(0.5rem, 2vmin, 1.25rem);
     transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn:hover {
@@ -110,9 +112,11 @@ body {
 
 .text-item {
     margin: clamp(0.5rem, 2vmin, 1.25rem); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /* items */
-
 
 /* mainScreen */
 .main {
@@ -131,9 +135,92 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;  
+    padding: 0 15%;
 }
-.menu-item {
-    margin: clamp(0.5rem, 2vmin, 1.25rem);
+.control-bar, .status-bar {
+    display: flex;
+    width: 100%;
+}
+
+.control-bar > * {
+    flex: 1;
+    text-align: center;
+}
+
+.status-bar > * {
+    flex: 1;
+    text-align: center; 
+}
+
+.level-btn {
+    display: none;
+    z-index: 2;
+}
+
+.cards {
+    width: 100%;
+    display: grid;
+    gap: 2vmin;
+    justify-content: center;
+    padding: 2vmin;
+    transition: opacity 0.5s ease;
+  }
+
+.cards-transparent {
+    opacity: 0.5;
+}
+
+.card {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-width: 20vmin;
+    perspective: 1000px;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card.flipped .card-inner {
+transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+position: absolute;
+width: 100%;
+height: 100%;
+backface-visibility: hidden;
+border-radius: 1vmin;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 3rem;
+background: grey;
+border: 2px solid #333;
+}
+
+.card-back {
+transform: rotateY(180deg);
+background: lightblue;
+}
+
+.text-lvl-ended {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1;
+}
+
+.text-lvl-ended-active {
+    opacity: 1;
+    z-index: 0;
 }
 /* levelScreen */
 
@@ -146,13 +233,13 @@ h1 {
         font-size: clamp(3.75rem, 12vmin, 3.75rem);
     }
     .font-pale {
-        font-size: clamp(1.5rem, 4.5vmin, 1.35rem);
+        font-size: clamp(1.35rem, 4.5vmin, 1.5rem);
     }
     .font-main {
         font-size: clamp(2.25rem, 7.5vmin, 2.25rem);
     }
     h1 {
-        margin: clamp(6rem, 18vmin, 5.63rem);
+        margin: clamp(5.63rem, 18vmin, 6rem);
     }
     .menu-item {
         margin: clamp(0.75rem, 3vmin, 0.94rem);
@@ -160,7 +247,7 @@ h1 {
 }
 
 /* анимация */
-@media (max-aspect-ratio: 2/3) {
+@media (max-aspect-ratio: 3/2) {
     @keyframes slideOutLeft {
         0% {
             transform: translateX(0);
@@ -169,20 +256,39 @@ h1 {
             transform: translateX(10%) skewX(10deg);
         }
         100% {
-            transform: translateX(-200%) skewX(-60deg);
-        }
-    }
-    
-    @keyframes slideInRight {
-        0% {
-            transform: translateX(100%) skewX(-50deg);
-        }
-        60% {
-            transform: skewX(0deg);
-        }
-        100% {
-            transform: translateX(0) skewX(0deg);
+            transform: translateX(-200%) skewX(-30deg);
         }
     }
 }
 /* анимация */
+
+/* карточки */
+@media (min-aspect-ratio: 1.2) {
+    .cards {
+      grid-template-columns: repeat(6, 1fr); /* 2 ряда по 6 */
+    }
+  }
+  
+  @media (max-aspect-ratio: 1.2) and (min-aspect-ratio: 0.7) {
+    .cards {
+      grid-template-columns: repeat(4, 1fr); /* 3 ряда по 4 */
+    }
+  }
+  
+  @media (max-aspect-ratio: 0.7) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr); /* 4 ряда по 3 */
+    }
+  }
+/* карточки */
+
+
+/* control-bar */
+@media (max-width: 550px) {
+    .control-bar {
+        flex-direction: column;
+    }
+}
+/* control-bar */
+
+/* медиа-запросы */
