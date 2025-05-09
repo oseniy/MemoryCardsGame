@@ -1,39 +1,27 @@
-
-// анимация смены экрана
-function switchScreen(nextScreen) {
-    const current = document.querySelector('.active');
-    const next = document.getElementById(`${nextScreen}`);
-
-    current.classList.add('slide-out');
-    current.addEventListener('animationend', () => {
-        current.classList.remove('active', 'slide-out');
-        next.classList.add('active', 'slide-in');
-
-        next.addEventListener('animationend', () => {
-            next.classList.remove('slide-in');
-        }, { once: true });
-    }, { once: true });
-}
-
-
-
-// игра
 const cardsContainer = document.querySelector('.cards');
+const movesCounter =  document.getElementById('movesCounterJS')
+const nextLevelBtn = document.getElementById('nextLevelBtnJS');
+const tryAgainBtn = document.getElementById('tryAgainBtnJS');
+const textVictory = document.getElementById('textVictoryJS')
+const textDefeat = document.getElementById('textDefeatJS')
+
 let HPsLeft;
 let cardValues = [];
 let totalPairs;
+let textDifficulty = ''
 
 function startLevel(difficulty) {
-    if (difficulty === 'easy') {HPsLeft = 12; totalPairs = 6};
-    if (difficulty === 'normal') {HPsLeft = 12; totalPairs = 6};
-    if (difficulty === 'hard') {HPsLeft = 12; totalPairs = 6};
+    if (difficulty === 'easy') {HPsLeft = 12; totalPairs = 6; textDifficulty = 'Лёгкий'};
+    if (difficulty === 'normal') {HPsLeft = 12; totalPairs = 9; textDifficulty = 'Средний'};
+    if (difficulty === 'hard') {HPsLeft = 12; totalPairs = 12; textDifficulty = 'Сложный'};
 
-    document.getElementById('moves-counter').textContent = `Жизней: ${HPsLeft}`;
+    movesCounter.textContent = `Жизней: ${HPsLeft}`;
+    document.getElementById('difficultyJS').textContent = `${textDifficulty}`;
 
     // Прочистка поля и перемешивание карточек
     resetCards(); 
     setupCardEvents();
-    switchScreen(difficulty);
+    switchScreen('levelJS');
 }
 
 function resetCards() {
@@ -105,37 +93,50 @@ function setupCardEvents() {
     });
 }
 
+// анимация смены экрана
+function switchScreen(nextScreen) {
+    const current = document.querySelector('.active');
+    const next = document.getElementById(`${nextScreen}`);
+
+    current.classList.add('slide-out');
+    current.addEventListener('animationend', () => {
+        current.classList.remove('active', 'slide-out');
+        next.classList.add('active', 'slide-in');
+
+        next.addEventListener('animationend', () => {
+            next.classList.remove('slide-in');
+        }, { once: true });
+    }, { once: true });
+}
+
+
 function victory() {
-    const nextLevel = document.getElementById('nextLevelJS');
-    nextLevel.classList.add('slide-in');
-    nextLevel.classList.add('active');
-    nextLevel.addEventListener('animationend', () => {
-        nextLevel.classList.remove('slide-in');
-    })
+    nextLevelBtn.classList.add('slide-in');
+    nextLevelBtn.classList.add('active');
+    nextLevelBtn.addEventListener('animationend', () => {
+        nextLevelBtn.classList.remove('slide-in');
+    }, { once: true })
 
     cardsContainer.classList.add('cards-transparent')
 
-    const textVictory = document.getElementById('textVictoryJS')
     textVictory.classList.add('text-lvl-ended-active')
 }
 
 function defeat() {
-    const tryAgain = document.getElementById('tryAgainJS');
-    tryAgain.classList.add('slide-in');
-    tryAgain.classList.add('active');
-    tryAgain.addEventListener('animationend', () => {
-        tryAgain.classList.remove('slide-in');
-    })
+    tryAgainBtn.classList.add('slide-in');
+    tryAgainBtn.classList.add('active');
+    tryAgainBtn.addEventListener('animationend', () => {
+        tryAgainBtn.classList.remove('slide-in');
+    }, { once: true })
 
     cardsContainer.classList.add('cards-transparent')
 
-    const textDefeat = document.getElementById('textDefeatJS')
     textDefeat.classList.add('text-lvl-ended-active')
 }
 
 function doDamage() {
     HPsLeft -= 1;
-    document.getElementById('moves-counter').textContent = `Жизней: ${HPsLeft}`;
+    movesCounter.textContent = `Жизней: ${HPsLeft}`;
 }
 
 function shuffleArray(array) {
