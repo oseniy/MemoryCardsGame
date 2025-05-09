@@ -9,23 +9,34 @@ let HPsLeft;
 let cardValues = [];
 let totalPairs;
 let textDifficulty = ''
+let nextLevel = ''
+let difficulty = ''
 
-function startLevel(difficulty) {
-    if (difficulty === 'easy') {HPsLeft = 12; totalPairs = 6; textDifficulty = 'Лёгкий'};
-    if (difficulty === 'normal') {HPsLeft = 12; totalPairs = 9; textDifficulty = 'Средний'};
-    if (difficulty === 'hard') {HPsLeft = 12; totalPairs = 12; textDifficulty = 'Сложный'};
+function startLevel(difficultyLocal) {
+    difficulty = difficultyLocal
+    console.log(difficulty)
+    if (difficulty === 'easy') {HPsLeft = 12; totalPairs = 6; textDifficulty = 'Лёгкий'; nextLevel = 'normal'};
+    if (difficulty === 'normal') {HPsLeft =18; totalPairs = 9; textDifficulty = 'Средний'; nextLevel = 'hard'};
+    if (difficulty === 'hard') {HPsLeft = 24; totalPairs = 12; textDifficulty = 'Сложный'};
 
     movesCounter.textContent = `Жизней: ${HPsLeft}`;
     document.getElementById('difficultyJS').textContent = `${textDifficulty}`;
 
     // Прочистка поля и перемешивание карточек
     resetCards(); 
+    setLayout(difficulty)
     setupCardEvents();
     switchScreen('levelJS');
 }
 
-function resetCards() {
+function setLayout(difficulty) {
+    if (difficulty === 'easy') cardsContainer.classList.add('layout-12');
+    if (difficulty === 'normal') cardsContainer.classList.add('layout-18');
+    if (difficulty === 'hard') cardsContainer.classList.add('layout-24');
+}
 
+function resetCards() {
+    cardsContainer.classList.remove('layout-12', 'layout-18', 'layout-24');
     if (cardsContainer.classList.contains('cards-transparent')) {
         cardsContainer.classList.remove('cards-transparent')
         const textLvlEnded = document.querySelector('.text-lvl-ended-active')
@@ -110,13 +121,22 @@ function switchScreen(nextScreen) {
 }
 
 
-function victory() {
-    nextLevelBtn.classList.add('slide-in');
-    nextLevelBtn.classList.add('active');
-    nextLevelBtn.addEventListener('animationend', () => {
-        nextLevelBtn.classList.remove('slide-in');
-    }, { once: true })
+nextLevelBtn.addEventListener( 'click', () => {
+    startLevel(nextLevel)
+})
 
+tryAgainBtn.addEventListener( 'click', () => {
+    startLevel(difficulty)
+})
+
+function victory() {
+    if (difficulty != 'hard') {
+        nextLevelBtn.classList.add('slide-in');
+        nextLevelBtn.classList.add('active');
+        nextLevelBtn.addEventListener('animationend', () => {
+            nextLevelBtn.classList.remove('slide-in');
+        }, { once: true })
+    }
     cardsContainer.classList.add('cards-transparent')
 
     textVictory.classList.add('text-lvl-ended-active')
