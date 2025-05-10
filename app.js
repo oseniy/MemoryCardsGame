@@ -14,9 +14,17 @@ function startLevel(difficulty) {
     let cardValues = [];
     let totalPairs;
     
-    if (difficulty === 'levelEasyJS') {HPsLeft = 6; totalPairs = 6};
-    if (difficulty === 'levelNormalJS') {HPsLeft =6; totalPairs = 9};
-    if (difficulty === 'levelHardJS') {HPsLeft = 6; totalPairs = 12};
+const colors = [ 
+    "#FFD1DC", "#B5EAD7", "#C7CEEA", "#E2F0CB", 
+    "#FFDAC1", "#B2E2F1", "#F8C8DC", "#D5E6ED", 
+    "#F3E6DD", "#D4A5C3", "#A8D8B9", "#FFE5B4" 
+];
+
+const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    
+    if (difficulty === 'levelEasyJS') {HPsLeft = 8; totalPairs = 6};
+    if (difficulty === 'levelNormalJS') {HPsLeft =14; totalPairs = 9};
+    if (difficulty === 'levelHardJS') {HPsLeft = 16; totalPairs = 12};
 
     movesCounter.textContent = `Жизней: ${HPsLeft}`;
 
@@ -36,22 +44,27 @@ function startLevel(difficulty) {
 
         cardsContainer.innerHTML = '';
 
-        const values = [];
-        for (let i = 1; i <= totalPairs; i++) {
-            values.push(i);
-            values.push(i);
-        }
+        const shuffledColors = shuffleArray(colors).slice(0, totalPairs)
+        const shuffledValues = shuffleArray(values).slice(0, totalPairs)
+         
+        const cardsData = shuffledValues.map((value, index) => ({
+            value: value,
+            color: shuffledColors[index]
+        }));
 
-        cardValues = shuffleArray(values);
+        const pairedCardsData = cardsData.flatMap(card => [card, { ...card }]);
 
-        cardValues.forEach(value => {
+        const finalCards = shuffleArray(pairedCardsData);
+        finalCards.forEach(data => {
             const card = document.createElement('div')
             card.classList.add('card')
-            card.dataset.value = value
+            card.dataset.color = data.color;
+            card.dataset.value = data.value
             card.innerHTML = `
                 <div class="card-inner">
                     <div class="card-front"></div>
-                    <div class="card-back">${value}</div>
+                    <div class="card-back" style="background-color: ${data.color}; background-image: url('./assets/imgs/${data.value}.png')">
+                    </div>
                 </div>
             `
             cardsContainer.appendChild(card)
@@ -74,7 +87,6 @@ function startLevel(difficulty) {
                     lock = true;
                     const [a, b] = flipped;
                     if (a.dataset.value === b.dataset.value) {
-                        victory();
                         flipped = [];
                         lock = false;
                         pairsFound += 1;

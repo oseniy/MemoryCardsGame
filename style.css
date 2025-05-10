@@ -201,13 +201,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-size: 3rem;
-background: grey;
-border: 2px solid #333;
+background: #999999;
+border: 0.15rem solid #5A5A5A;
 }
 
 .card-back {
-transform: rotateY(180deg);
-background: lightblue;
+    transform: rotateY(180deg);
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: contain;
 }
 
 .text-lvl-ended {
