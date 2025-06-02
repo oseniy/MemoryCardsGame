@@ -296,6 +296,9 @@ h1 {
 @media (min-aspect-ratio: 1) {
     .cards.layout-18 {
     grid-template-columns: repeat(6, 1fr); 
+        .card {
+            max-width: 20vh;
+        } 
     }
 }
 
