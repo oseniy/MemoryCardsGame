@@ -173,7 +173,6 @@ h1 {
 .card {
     aspect-ratio: 4 / 5;
     width: 100%;
-    max-width: 20vmin;
     perspective: 1000px;
     border-radius: 5%;
     cursor: pointer;
@@ -247,6 +246,9 @@ h1 {
     .menu-item {
         margin: clamp(0.75rem, 3vmin, 0.94rem);
     }
+    .card {
+
+    }
 }
 
 /* анимация */
@@ -266,21 +268,27 @@ h1 {
 /* анимация */
 
 /* карточки */
-@media (min-aspect-ratio: 1.2) {
+@media (min-aspect-ratio: 1.7) {
     .cards.layout-12 {
     grid-template-columns: repeat(6, 1fr);
     }
 }
 
-@media (max-aspect-ratio: 1.2) and (min-aspect-ratio: 0.7) {
+@media (max-aspect-ratio: 1.7) and (min-aspect-ratio: 1) {
     .cards.layout-12 {
     grid-template-columns: repeat(4, 1fr); 
+        .card {
+            max-width: 20vh;
+        } 
     }
 }
 
-@media (max-aspect-ratio: 0.7) {
+@media (max-aspect-ratio: 1) {
     .cards.layout-12 {
     grid-template-columns: repeat(3, 1fr); 
+        .card {
+            max-width: 16vh;
+        } 
     }
 }
 
@@ -293,8 +301,10 @@ h1 {
 
 @media (max-aspect-ratio: 1) and (min-aspect-ratio: 0.6) {
     .cards.layout-18 {
-    max-width: 80%;
     grid-template-columns: repeat(4, 1fr); 
+        .card {
+            max-width: 10vh;
+        } 
     }
     
     .cards.layout-18 .card:nth-child(17) {
@@ -309,30 +319,35 @@ h1 {
 
 @media (max-aspect-ratio: 0.6) {
     .cards.layout-18 {
-    max-width: 80%;
     grid-template-columns: repeat(3, 1fr); 
-    }
-    .card {
-        max-width: 16vmin;
-    }
+        .card {
+            max-width: 9vh;
+        } 
+    }   
 }
 
 
-@media (min-aspect-ratio: 1.1) {
+@media (min-aspect-ratio: 1.6) {
     .cards.layout-24 {
     grid-template-columns: repeat(8, 1fr);
     }
 }
 
-@media (max-aspect-ratio: 1.1) and (min-aspect-ratio: 0.6) {
+@media (max-aspect-ratio: 1.6) and (min-aspect-ratio: 1) {
     .cards.layout-24 {
     grid-template-columns: repeat(6, 1fr); 
+        .card {
+            max-width: 15vh;
+        }
     }
 }
 
-@media (max-aspect-ratio: 0.6) {
+@media (max-aspect-ratio: 1) {
     .cards.layout-24 {
     grid-template-columns: repeat(4, 1fr); 
+        .card {
+            max-width: 9vh;
+        }
     }
 }
 /* карточки */
