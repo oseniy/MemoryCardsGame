@@ -78,7 +78,6 @@ const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         pairsFound = 0;
         cards.forEach(card => {
             card.addEventListener('click', () => {
-                defeat()
                 if (lock || card.classList.contains('flipped')) return;
 
                 card.classList.add('flipped');
