@@ -312,6 +312,9 @@ h1 {
     max-width: 80%;
     grid-template-columns: repeat(3, 1fr); 
     }
+    .card {
+        max-width: 16vmin;
+    }
 }
 
 
