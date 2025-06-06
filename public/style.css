@@ -19,10 +19,15 @@ body {
     font-weight: bold;
 }
 
-.font-pale {
+.font-small-pale {
     cursor: default;
     font-size: clamp(1rem, 3vmin, 1.8rem);
     color: rgb(150, 150, 150)
+}
+
+.font-small {
+    cursor: default;
+    font-size: clamp(1rem, 3vmin, 1.8rem);
 }
 
 .font-main {
@@ -109,6 +114,10 @@ body {
     align-items: center;
     justify-content: center;
     font-size: clamp(1.5rem, 5vmin, 3rem);
+}
+
+.btn-small {
+    font-size: clamp(1rem, 3vmin, 1.8rem);
 }
 
 .btn:hover {
@@ -242,6 +251,7 @@ input {
   font-family: 'MyFont', sans-serif;
   font-size: clamp(1rem, 3vmin, 1.8rem);
   margin: clamp(0.5rem, 2vmin, 1.25rem);
+  width: clamp(15rem, 45vmin, 27rem);;
   background: transparent;
   border: 0.3rem solid black;
   border-radius: 15px;
