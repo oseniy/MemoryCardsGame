@@ -161,3 +161,10 @@ function switchScreen(nextScreen) {
         }, { once: true });
     }, { once: true });
 }
+
+// аутентификация
+
+function revertScreen() {
+    const singUp = document.querySelector('.sing-up__inner');
+    singUp.classList.add('sing-up--flipped');
+}
