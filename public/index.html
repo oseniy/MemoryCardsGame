@@ -13,8 +13,8 @@
     <div class="app-wrapper">
         <div class="screen main active" id="mainJS">
             <div class="auth">
-                <button class="auth__btn btn font-main" onclick="switchScreen('singInJS')">Войти</button>
-                <button class="auth__btn btn font-main" onclick="switchScreen('singUpJS')">Зарегистрироваться</button>
+                <button class="auth__btn btn font-main" data-action="singIn">Войти</button>
+                <button class="auth__btn btn font-main" data-action="singUp">Зарегистрироваться</button>
             </div>
             <h1 class="font-header">Ёжки-мышки</h1>
             <p class="font-small-pale">Выберите уровень</p>
@@ -33,12 +33,12 @@
         <div class="screen sing-up" id="singUpJS">
             <div class="sing-up__inner">
                 <div class="sing-up__front">
-                    <form action="" method="POST">
-                        <input class="" type="email" placeholder="email" required>
+                    <form action="" method="POST" id="singUpFormJS">
+                        <input class="" type="email" placeholder="email" id="singUpEmailJS" required>
                         <input class="" type="text" placeholder="никнейм">
-                        <input class="" type="password" placeholder="пароль" required>
+                        <input class="" type="password" placeholder="пароль" id="singUpPasswdJS" required>
                         <input class="" type="password" placeholder="пароль повторно">
-                        <button class="btn btn-small" type="submit" onclick="revertScreen()">Отправить код подтверждения на почту</button>
+                        <button class="btn btn-small" type="submit">Отправить код подтверждения на почту</button>
                     </form>
                 </div>
                 <div class="sing-up__back">

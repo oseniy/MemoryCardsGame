@@ -1,4 +1,31 @@
 import switchScreen from "./switchScreen.js";
+import png1 from "../assets/imgs/1.png";
+import png2 from "../assets/imgs/2.png";
+import png3 from "../assets/imgs/3.png";
+import png4 from "../assets/imgs/4.png";
+import png5 from "../assets/imgs/5.png";
+import png6 from "../assets/imgs/6.png";
+import png7 from "../assets/imgs/7.png";
+import png8 from "../assets/imgs/8.png";
+import png9 from "../assets/imgs/9.png";
+import png10 from "../assets/imgs/10.png";
+import png11 from "../assets/imgs/11.png";
+import png12 from "../assets/imgs/12.png";
+
+const images = { 
+    1: png1, 
+    2: png2,
+    3: png3,
+    4: png4,
+    5: png5,
+    6: png6,
+    7: png7,
+    8: png8,
+    9: png9,
+    10: png10,
+    11: png11,
+    12: png12,
+};
 
 export default function startLevel(difficulty) {
 
@@ -59,10 +86,11 @@ export default function startLevel(difficulty) {
             card.classList.add('card')
             card.dataset.color = data.color;
             card.dataset.value = data.value
+            const imageUrl = images[data.value];
             card.innerHTML = `
                 <div class="card-inner">
                     <div class="card-front"></div>
-                    <div class="card-back" style="background-color: ${data.color}; background-image: url('./assets/imgs/${data.value}.png')">
+                    <div class="card-back" style="background-color: ${data.color}; background-image: url('${imageUrl}')">
                     </div>
                 </div>
             `
@@ -142,3 +170,4 @@ export default function startLevel(difficulty) {
         return array;
     }
 }
+
