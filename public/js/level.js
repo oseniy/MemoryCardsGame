@@ -1,6 +1,6 @@
+import switchScreen from "./switchScreen.js";
 
-
-function startLevel(difficulty) {
+export default function startLevel(difficulty) {
 
     const level = document.getElementById(difficulty)
     const cardsContainer = level.querySelector('.cards');
@@ -11,16 +11,15 @@ function startLevel(difficulty) {
     const textDefeat = level.querySelector('.text-defeat')
 
     let HPsLeft;
-    let cardValues = [];
     let totalPairs;
     
-const colors = [ 
-    "#FFD1DC", "#B5EAD7", "#C7CEEA", "#E2F0CB", 
-    "#FFDAC1", "#B2E2F1", "#F8C8DC", "#D5E6ED", 
-    "#F3E6DD", "#D4A5C3", "#A8D8B9", "#FFE5B4" 
-];
+    const colors = [ 
+        "#FFD1DC", "#B5EAD7", "#C7CEEA", "#E2F0CB", 
+        "#FFDAC1", "#B2E2F1", "#F8C8DC", "#D5E6ED", 
+        "#F3E6DD", "#D4A5C3", "#A8D8B9", "#FFE5B4" 
+    ];
 
-const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
     
     if (difficulty === 'levelEasyJS') {HPsLeft = 8; totalPairs = 6};
     if (difficulty === 'levelNormalJS') {HPsLeft =14; totalPairs = 9};
@@ -75,11 +74,10 @@ const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         const cards = document.querySelectorAll('.card');
         let flipped = [];
         let lock = false;
-        pairsFound = 0;
+        let pairsFound = 0;
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 if (lock || card.classList.contains('flipped')) return;
-
                 card.classList.add('flipped');
                 flipped.push(card);
 
@@ -143,28 +141,4 @@ const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         }
         return array;
     }
-}
-
-// анимация смены экрана
-function switchScreen(nextScreen) {
-
-    const current = document.querySelector('.screen.active');
-    const next = document.getElementById(`${nextScreen}`);
-
-    current.classList.add('slide-out');
-    current.addEventListener('animationend', () => {
-        current.classList.remove('active', 'slide-out');
-        next.classList.add('active', 'slide-in');
-
-        next.addEventListener('animationend', () => {
-            next.classList.remove('slide-in');
-        }, { once: true });
-    }, { once: true });
-}
-
-// аутентификация
-
-function revertScreen() {
-    const singUp = document.querySelector('.sing-up__inner');
-    singUp.classList.add('sing-up--flipped');
 }

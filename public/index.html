@@ -18,26 +18,26 @@
             </div>
             <h1 class="font-header">Ёжки-мышки</h1>
             <p class="font-small-pale">Выберите уровень</p>
-            <button class="btn font-main" onclick="startLevel('levelEasyJS')">Легкий</button>
-            <button class="btn font-main" onclick="startLevel('levelNormalJS')">Средний</button>
-            <button class="btn font-main" onclick="startLevel('levelHardJS')">Сложный</button>
+            <button class="btn font-main" data-action="startEasy">Легкий</button>
+            <button class="btn font-main" data-action="startNormal">Средний</button>
+            <button class="btn font-main" data-action="startHard">Сложный</button>
         </div>
         <div class="screen sing-in" id="singInJS">
-            <form action="" method="POST">
-                <input class="" type="email" placeholder="email" required>
-                <input class="" type="password" placeholder="пароль" required>
+            <form action="" method="POST" id="singInFormJS">
+                <input class="" type="email" placeholder="email" id="singInEmailJS" required>
+                <input class="" type="password" placeholder="пароль" id="singInPasswdJS" required>
                 <button class="btn font-main" type="submit">Войти</button>
             </form>
-            <button class="btn auth__back-btn font-main" onclick="switchScreen('mainJS')">Назад</button>
+            <button class="btn auth__back-btn font-main" data-action="back">Назад</button>
         </div>
         <div class="screen sing-up" id="singUpJS">
             <div class="sing-up__inner">
                 <div class="sing-up__front">
                     <form action="" method="POST">
                         <input class="" type="email" placeholder="email" required>
-                        <input class="" type="text" placeholder="никнейм" required>
+                        <input class="" type="text" placeholder="никнейм">
                         <input class="" type="password" placeholder="пароль" required>
-                        <input class="" type="password" placeholder="пароль повторно" required>
+                        <input class="" type="password" placeholder="пароль повторно">
                         <button class="btn btn-small" type="submit" onclick="revertScreen()">Отправить код подтверждения на почту</button>
                     </form>
                 </div>
@@ -45,7 +45,7 @@
                     <button class="btn font-main" type="submit">Войти</button>
                 </div>            
             </div>
-            <button class="btn auth__back-btn font-main" onclick="switchScreen('mainJS')">Назад</button>    
+            <button class="btn auth__back-btn font-main" data-action="back">Назад</button>    
         </div>
         <div class="screen level" id="levelEasyJS">
             <div class="status-bar">
@@ -54,10 +54,10 @@
             </div>
             <div class="cards layout-12"></div>
             <div class="control-bar">
-                <button class="btn font-main" onclick="switchScreen('mainJS')">Назад</button>
+                <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
-                    <button class="btn level-btn font-main next-level-btn" onclick="startLevel('levelNormalJS')">Следующий уровень</button>
-                    <button class="btn level-btn font-main try-again-btn" onclick="startLevel('levelEasyJS')">Попробовать ещё раз</button>
+                    <button class="btn level-btn font-main next-level-btn" data-action="startNormal">Следующий уровень</button>
+                    <button class="btn level-btn font-main try-again-btn" data-action="startEasy">Попробовать ещё раз</button>
                 </div>
             </div>
             <p class="font-header text-lvl-ended text-victory">Победа!</p>
@@ -70,10 +70,10 @@
             </div>
             <div class="cards layout-18"></div>
             <div class="control-bar">
-                <button class="btn font-main" onclick="switchScreen('mainJS')">Назад</button>
+                <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
-                    <button class="btn level-btn font-main next-level-btn" onclick="startLevel('levelHardJS')">Следующий уровень</button>
-                    <button class="btn level-btn font-main try-again-btn" onclick="startLevel('levelNormalJS')">Попробовать ещё раз</button>
+                    <button class="btn level-btn font-main next-level-btn" data-action="startHard">Следующий уровень</button>
+                    <button class="btn level-btn font-main try-again-btn" data-action="startNormal">Попробовать ещё раз</button>
                 </div>
             </div>
             <p class="font-header text-lvl-ended text-victory">Победа!</p>
@@ -86,15 +86,15 @@
             </div>
             <div class="cards layout-24"></div>
             <div class="control-bar">
-                <button class="btn font-main" onclick="switchScreen('mainJS')">Назад</button>
+                <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
-                    <button class="btn level-btn font-main try-again-btn" onclick="startLevel('levelHardJS')">Попробовать ещё раз</button>
+                    <button class="btn level-btn font-main try-again-btn" data-action="startHard">Попробовать ещё раз</button>
                 </div>
             </div>
             <p class="font-header text-lvl-ended text-victory">Победа!</p>
             <p class="font-header text-lvl-ended text-defeat">Поражение(</p>
         </div>
     </div>
-    <script src="app.js"></script>
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>
