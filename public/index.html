@@ -12,9 +12,12 @@
     <div class="background"></div>
     <div class="app-wrapper">
         <div class="screen main active" id="mainJS">
-            <div class="auth">
+            <div class="auth disable" id="authAreaJS">
                 <button class="auth__btn btn font-main" data-action="singIn">Войти</button>
                 <button class="auth__btn btn font-main" data-action="singUp">Зарегистрироваться</button>
+            </div>
+            <div class="username" id="usernameJS">
+                <p class="text-item font-main"></p>
             </div>
             <h1 class="font-header">Ёжки-мышки</h1>
             <p class="font-small-pale">Выберите уровень</p>
@@ -31,20 +34,13 @@
             <button class="btn auth__back-btn font-main" data-action="back">Назад</button>
         </div>
         <div class="screen sing-up" id="singUpJS">
-            <div class="sing-up__inner">
-                <div class="sing-up__front">
-                    <form action="" method="POST" id="singUpFormJS">
-                        <input class="" type="email" placeholder="email" id="singUpEmailJS" required>
-                        <input class="" type="text" placeholder="никнейм">
-                        <input class="" type="password" placeholder="пароль" id="singUpPasswdJS" required>
-                        <input class="" type="password" placeholder="пароль повторно">
-                        <button class="btn btn-small" type="submit">Отправить код подтверждения на почту</button>
-                    </form>
-                </div>
-                <div class="sing-up__back">
-                    <button class="btn font-main" type="submit">Войти</button>
-                </div>            
-            </div>
+            <form action="" method="POST" id="singUpFormJS">
+                <input class="" type="email" placeholder="email" id="singUpEmailJS" required>
+                <input class="" type="text" placeholder="никнейм" id="singUpUsernameJS" maxlength="15" minlength="3" required>
+                <input class="" type="password" placeholder="пароль" id="singUpPasswdJS" minlength="6" required>
+                <input class="" type="password" placeholder="пароль повторно" id="singUpPasswdConfirmJS" minlength="6" required>
+                <button class="btn btn-small" type="submit">Зарегистрироваться</button>
+            </form> 
             <button class="btn auth__back-btn font-main" data-action="back">Назад</button>    
         </div>
         <div class="screen level" id="levelEasyJS">

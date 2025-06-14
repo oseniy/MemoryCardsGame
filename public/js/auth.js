@@ -1,67 +1,89 @@
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import { auth } from "./main.js";
+import { db } from "./main.js";
 
-// регистрация
-function revertScreen() {
-    const singUp = document.querySelector('.sing-up__inner');
-    singUp.classList.add('sing-up--flipped');
+async function isUsernameTaken(usernameToCheck) {
+  const usersCollectionRef = collection(db, "users");
+  const q = query(usersCollectionRef, where("username", "==", usernameToCheck));
+
+  try {
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  } catch (error) {
+      console.error("Ошибка при проверке никнейма:", error);
+      throw error;
+  }
 }
 
 export async function handleRegistration() {
-  const emailInput = document.getElementById('singUpEmailJS'); // Получаем поле ввода email
-  const passwordInput = document.getElementById('singUpPasswdJS'); // Получаем поле ввода password
+  const emailInput = document.getElementById('singUpEmailJS');
+  const passwordInput = document.getElementById('singUpPasswdJS');
+  const passwordConfirmInput = document.getElementById('singUpPasswdConfirmJS');
+  const usernameInput = document.getElementById('singUpUsernameJS');
 
-  const email = emailInput.value; // Получаем значение email
-  const password = passwordInput.value; // Получаем значение password
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  const confirm = passwordConfirmInput.value;
+  const username = usernameInput.value;
+
+  if (password !== confirm) {
+    alert('Пароли не совпадают!')
+    return;
+  }
+
+  const isTaken = await isUsernameTaken(username);
+
+  if (isTaken) {
+    alert('Такой никнейм уже используется!')
+    return
+  }
 
   try {
-    // Вызываем функцию Firebase для создания пользователя
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
     // Если успешно, userCredential содержит информацию о созданном пользователе
     const user = userCredential.user;
     console.log("Пользователь успешно зарегистрирован и вошел:", user);
-    revertScreen();
-    // Здесь вы можете перенаправить пользователя,
-    // обновить UI, показать сообщение об успехе и т.д.
-    // Поскольку после создания аккаунта пользователь автоматически входит,
-    // Firebase Auth автоматически обновит статус входа в вашем приложении.
-
-    // Firebase автоматически сохраняет сессию пользователя.
-    // При следующей загрузке страницы пользователь может остаться вошедшим,
-    // если вы не вызовете функцию выхода (signOut).
+    const uid = user.uid;
+    
+    await setDoc(doc(db, 'users', uid), {
+      username: username,
+      email: email,
+    })
+    switchScreen('mainJS');
 
   } catch (error) {
-    // Обрабатываем ошибки, которые могут возникнуть
-    const errorCode = error.code; // Код ошибки (например, 'auth/email-already-in-use')
-    const errorMessage = error.message; // Сообщение об ошибке
 
-    console.error(`Ошибка регистрации: ${errorCode}`, errorMessage);
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`Ошибка регистрации: ${errorCode}`, errorMessage);
+    console.error(`Ошибка регистрации: ${errorCode}`);
 
-    // Здесь вы должны показать понятное сообщение об ошибке пользователю
-    // Например, если errorCode === 'auth/email-already-in-use', выводите:
-    // "Этот адрес почты уже используется."
-    // Если errorCode === 'auth/weak-password', выводите:
-    // "Пароль слишком простой. Придумайте более надежный."
-    // и т.д.
   }
 }
 
-// Вам нужно будет подключить эту функцию к событию клика по вашей кнопке регистрации
-// Например:
-// const registerButton = document.getElementById('register-button');
-// registerButton.addEventListener('click', handleRegistration);
 
 
 // Вход
-const singInForm = document.getElementById('singInFormJS');
-singInForm.addEventListener('submit', function(event) {
-    event.preventDefault();
+export async function handleSingIn() {
+  const emailInput = document.getElementById('singInEmailJS')
+  const passwordInput = document.getElementById('singInPasswdJS')
 
-    const email = document.getElementById('singInEmailJS').value;
-    const password = document.getElementById('singInPasswdJS').value;
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-    this.reset();
-    switchScreen('mainJS')
-
-})
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("Пользователь вошел:", user);
+    const uid = user.uid;
+    switchScreen('mainJS');
+  } catch(error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error("Ошибка при входе:", errorCode, errorMessage);
+    alert(`Ошибка при входе:, ${errorCode}`);
+  }
+}

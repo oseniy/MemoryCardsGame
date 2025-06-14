@@ -1,8 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, getDoc, doc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
-import { handleRegistration } from './auth.js';
+import { handleRegistration, handleSingIn } from './auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_k8EUQgEdFfsUCDJs3RGuIQ4sTXXXi4M",
@@ -15,6 +16,14 @@ const firebaseConfig = {
 
 // Инициализируем Firebase в приложении
 const app = initializeApp(firebaseConfig);
+
+// Получаем экземпляр сервиса аутентификации
+const auth = getAuth(app);
+export { auth };
+
+const db = getFirestore(app);
+export { db };
+
 
 // обработчик события кнопки "Назад"
 document.querySelectorAll('[data-action="back"]').forEach((btn) => {
@@ -51,12 +60,57 @@ document.querySelector('[data-action="singIn"]').addEventListener("click", () =>
     switchScreen("singInJS");
 });
 
+// обработчик события кнопки Зарегистрироваться
 const singUpForm = document.getElementById('singUpFormJS')
 singUpForm.addEventListener('submit', (event) => {
     event.preventDefault();
     handleRegistration();
 })
 
-// Получаем экземпляр сервиса аутентификации
-const auth = getAuth(app);
-export { auth };
+const singInForm = document.getElementById('singInFormJS')
+singInForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    handleSingIn();
+})
+
+// отображение области аутентификации
+const authArea = document.getElementById('authAreaJS');
+const usernameArea = document.getElementById('usernameJS');
+
+async function getUsername(user) {
+    const uid = user.uid;
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+        const data = userSnap.data();
+        return data.username
+    } else {
+        console.log("Документ не найден");
+    }
+}
+
+
+function showLoggedInUI(user) {
+    getUsername(user).then( username => {
+        if (username) {
+            usernameArea.innerHTML = `
+                <p class="text-item font-main">${username}</p>
+            `;
+        }
+    })
+    authArea.classList.add('disable');
+    usernameArea.classList.remove('disable');
+}
+
+function showLoggedOutUI() {
+    authArea.classList.remove('disable');
+    usernameArea.classList.add('disable');
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    showLoggedInUI(user);
+  } else {
+    showLoggedOutUI();
+  }
+});
