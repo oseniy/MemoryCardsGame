@@ -1,9 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
-import { handleRegistration, handleSingIn } from './auth.js';
+import { handleRegistration, handleSignIn } from './auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_k8EUQgEdFfsUCDJs3RGuIQ4sTXXXi4M",
@@ -52,30 +52,52 @@ document.querySelectorAll('[data-action="startHard"]').forEach((btn) => {
 });
 
 
-document.querySelector('[data-action="singUp"]').addEventListener("click", () => {
-    switchScreen("singUpJS");
+document.querySelector('[data-action="signUp"]').addEventListener("click", () => {
+    switchScreen("signUpJS");
 });
 
-document.querySelector('[data-action="singIn"]').addEventListener("click", () => {
-    switchScreen("singInJS");
+document.querySelector('[data-action="signIn"]').addEventListener("click", () => {
+    switchScreen("signInJS");
 });
 
 // обработчик события кнопки Зарегистрироваться
-const singUpForm = document.getElementById('singUpFormJS')
-singUpForm.addEventListener('submit', (event) => {
+const signUpForm = document.getElementById('signUpFormJS')
+signUpForm.addEventListener('submit', (event) => {
     event.preventDefault();
     handleRegistration();
 })
 
-const singInForm = document.getElementById('singInFormJS')
-singInForm.addEventListener('submit', (event) => {
+// обработчик события кнопки Войти
+const signInForm = document.getElementById('signInFormJS')
+signInForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    handleSingIn();
+    handleSignIn();
 })
 
 // отображение области аутентификации
 const authArea = document.getElementById('authAreaJS');
 const usernameArea = document.getElementById('usernameJS');
+const accountBtn = document.querySelector('[data-action="account"]')
+
+// обработчик события кнопки Аккаунта
+accountBtn.addEventListener("click", () => {
+    switchScreen("accountJS");
+});
+
+async function handleSignOut() {
+    try {
+        await signOut(auth);
+        console.log("Пользователь успешно вышел из аккаунта");
+        switchScreen('mainJS');
+    } catch(error) {
+        console.log("Ошибка при выходе из аккаунта");
+        alert("Не удалось выйти из аккаунта. Пожалуйста, попробуйте еще раз.");
+    }
+}
+
+document.querySelector('[data-action="SignOut"]').addEventListener("click", () => {
+    handleSignOut();
+})
 
 async function getUsername(user) {
     const uid = user.uid;
@@ -93,8 +115,8 @@ async function getUsername(user) {
 function showLoggedInUI(user) {
     getUsername(user).then( username => {
         if (username) {
-            usernameArea.innerHTML = `
-                <p class="text-item font-main">${username}</p>
+            accountBtn.textContent = `
+                ${username}
             `;
         }
     })

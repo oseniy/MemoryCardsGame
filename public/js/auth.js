@@ -18,10 +18,10 @@ async function isUsernameTaken(usernameToCheck) {
 }
 
 export async function handleRegistration() {
-  const emailInput = document.getElementById('singUpEmailJS');
-  const passwordInput = document.getElementById('singUpPasswdJS');
-  const passwordConfirmInput = document.getElementById('singUpPasswdConfirmJS');
-  const usernameInput = document.getElementById('singUpUsernameJS');
+  const emailInput = document.getElementById('signUpEmailJS');
+  const passwordInput = document.getElementById('signUpPasswdJS');
+  const passwordConfirmInput = document.getElementById('signUpPasswdConfirmJS');
+  const usernameInput = document.getElementById('signUpUsernameJS');
 
   const email = emailInput.value;
   const password = passwordInput.value;
@@ -67,9 +67,9 @@ export async function handleRegistration() {
 
 
 // Вход
-export async function handleSingIn() {
-  const emailInput = document.getElementById('singInEmailJS')
-  const passwordInput = document.getElementById('singInPasswdJS')
+export async function handleSignIn() {
+  const emailInput = document.getElementById('signInEmailJS')
+  const passwordInput = document.getElementById('signInPasswdJS')
 
   const email = emailInput.value;
   const password = passwordInput.value;
@@ -86,4 +86,5 @@ export async function handleSingIn() {
     console.error("Ошибка при входе:", errorCode, errorMessage);
     alert(`Ошибка при входе:, ${errorCode}`);
   }
+  this.reset();
 }
