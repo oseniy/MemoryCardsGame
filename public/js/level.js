@@ -60,8 +60,8 @@ export default function startLevel(difficulty) {
     switchScreen(difficulty);
 
     function resetCards() {
-        if (cardsContainer.classList.contains('cards-transparent')) {
-            cardsContainer.classList.remove('cards-transparent')
+        if (cardsContainer.classList.contains('')) {
+            cardsContainer.classList.remove('transparent')
             textVictory.classList.remove('text-lvl-ended-active')
             textDefeat.classList.remove('text-lvl-ended-active')
             if (difficulty != 'levelHardJS') nextLevelBtn.classList.remove('active');
@@ -140,7 +140,7 @@ export default function startLevel(difficulty) {
                 nextLevelBtn.classList.remove('slide-in');
             }, { once: true })
         }
-        cardsContainer.classList.add('cards-transparent')
+        cardsContainer.classList.add('transparent')
 
         textVictory.classList.add('text-lvl-ended-active')
     }
@@ -152,7 +152,7 @@ export default function startLevel(difficulty) {
             tryAgainBtn.classList.remove('slide-in');
         }, { once: true })
 
-        cardsContainer.classList.add('cards-transparent')
+        cardsContainer.classList.add('transparent')
 
         textDefeat.classList.add('text-lvl-ended-active')
     }

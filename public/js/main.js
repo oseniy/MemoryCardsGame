@@ -71,7 +71,7 @@ signUpForm.addEventListener('submit', (event) => {
 const signInForm = document.getElementById('signInFormJS')
 signInForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    handleSignIn();
+    handleSignIn(event.target);
 })
 
 // отображение области аутентификации

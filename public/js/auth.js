@@ -67,7 +67,7 @@ export async function handleRegistration() {
 
 
 // Вход
-export async function handleSignIn() {
+export async function handleSignIn(formElement) {
   const emailInput = document.getElementById('signInEmailJS')
   const passwordInput = document.getElementById('signInPasswdJS')
 
@@ -78,7 +78,6 @@ export async function handleSignIn() {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     console.log("Пользователь вошел:", user);
-    const uid = user.uid;
     switchScreen('mainJS');
   } catch(error) {
     const errorCode = error.code;
@@ -86,5 +85,5 @@ export async function handleSignIn() {
     console.error("Ошибка при входе:", errorCode, errorMessage);
     alert(`Ошибка при входе:, ${errorCode}`);
   }
-  this.reset();
+  formElement.reset();
 }
