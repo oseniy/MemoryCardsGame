@@ -31,11 +31,11 @@ export default function startLevel(difficulty) {
 
     const level = document.getElementById(difficulty)
     const cardsContainer = level.querySelector('.cards');
-    const movesCounter =  level.querySelector('.moves-counter')
-    const nextLevelBtn = level.querySelector('.next-level-btn');
-    const tryAgainBtn = level.querySelector('.try-again-btn');
-    const textVictory = level.querySelector('.text-victory')
-    const textDefeat = level.querySelector('.text-defeat')
+    const movesCounter =  level.querySelector('[data-selectorJS="moves-counter"]')
+    const nextLevelBtn = level.querySelector('[data-selectorJS="next-level-btn"]');
+    const tryAgainBtn = level.querySelector('[data-selectorJS="try-again-btn"]');
+    const textVictory = level.querySelector('[data-selectorJS="text-victory"]')
+    const textDefeat = level.querySelector('[data-selectorJS="text-defeat"]')
 
     let HPsLeft;
     let totalPairs;
@@ -60,12 +60,13 @@ export default function startLevel(difficulty) {
     switchScreen(difficulty);
 
     function resetCards() {
-        if (cardsContainer.classList.contains('')) {
+        console.log("reset cards")
+        if (cardsContainer.classList.contains('transparent')) {
             cardsContainer.classList.remove('transparent')
-            textVictory.classList.remove('text-lvl-ended-active')
-            textDefeat.classList.remove('text-lvl-ended-active')
-            if (difficulty != 'levelHardJS') nextLevelBtn.classList.remove('active');
-            tryAgainBtn.classList.remove('active')
+            textVictory.classList.replace('text-overlay-active', 'text-overlay-hiden')
+            textDefeat.classList.replace('text-overlay-active', 'text-overlay-hiden')
+            if (difficulty != 'levelHardJS') nextLevelBtn.classList.replace('text-overlay-active', 'text-overlay-hiden');
+            tryAgainBtn.classList.replace('text-overlay-active', 'text-overlay-hiden')
         }
 
         cardsContainer.innerHTML = '';
@@ -110,6 +111,7 @@ export default function startLevel(difficulty) {
                 flipped.push(card);
 
                 if (flipped.length === 2) {
+                    defeat()
                     lock = true;
                     const [a, b] = flipped;
                     if (a.dataset.value === b.dataset.value) {
@@ -142,7 +144,7 @@ export default function startLevel(difficulty) {
         }
         cardsContainer.classList.add('transparent')
 
-        textVictory.classList.add('text-lvl-ended-active')
+        textVictory.classList.replace('text-overlay-hiden', 'text-overlay-active')
     }
 
     function defeat() {
@@ -154,7 +156,7 @@ export default function startLevel(difficulty) {
 
         cardsContainer.classList.add('transparent')
 
-        textDefeat.classList.add('text-lvl-ended-active')
+        textDefeat.classList.replace('text-overlay-hiden', 'text-overlay-active')
     }
 
     function doDamage() {

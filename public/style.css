@@ -103,6 +103,24 @@ body {
 .slide-in {
     animation: slideInRight 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) forwards;
 }
+
+.transparent {
+    opacity: 0.5;
+}
+
+.text-overlay-hiden {
+    position: absolute;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    z-index: -1;
+}
+
+.text-overlay-active {
+    position: absolute;
+    transition: opacity 0.5s ease;
+    opacity: 1;
+    z-index: 0;
+}
 /* анимация */
 
 /* items */
@@ -171,10 +189,6 @@ h1 {
     transition: opacity 0.5s ease;
 }
 
-.transparent {
-    opacity: 0.5;
-}
-
 .card {
     aspect-ratio: 4 / 5;
     width: 100%;
@@ -216,18 +230,6 @@ h1 {
     background-repeat: no-repeat;
     background-position: center; 
     background-size: contain;
-}
-
-.text-lvl-ended {
-    position: absolute;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: -1;
-}
-
-.text-lvl-ended-active {
-    opacity: 1;
-    z-index: 0;
 }
 /* levelScreen */
 
