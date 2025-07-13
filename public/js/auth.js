@@ -3,6 +3,7 @@ import { doc, setDoc, collection, query, where, getDocs } from 'firebase/firesto
 import switchScreen from "./switchScreen.js";
 import { auth } from "./main.js";
 import { db } from "./main.js";
+import { startLoading, endLoading } from './loading.js';
 
 async function isUsernameTaken(usernameToCheck) {
   const usersCollectionRef = collection(db, "users");
@@ -17,7 +18,7 @@ async function isUsernameTaken(usernameToCheck) {
   }
 }
 
-export async function handleRegistration() {
+export async function handleRegistration(formElement) {
   const emailInput = document.getElementById('signUpEmailJS');
   const passwordInput = document.getElementById('signUpPasswdJS');
   const passwordConfirmInput = document.getElementById('signUpPasswdConfirmJS');
@@ -32,10 +33,11 @@ export async function handleRegistration() {
     alert('Пароли не совпадают!')
     return;
   }
-
+  startLoading();
   const isTaken = await isUsernameTaken(username);
 
   if (isTaken) {
+    endLoading();
     alert('Такой никнейм уже используется!')
     return
   }
@@ -52,16 +54,18 @@ export async function handleRegistration() {
       username: username,
       email: email,
     })
+    endLoading();
     switchScreen('mainJS');
 
   } catch (error) {
-
+    endLoading();
     const errorCode = error.code;
     const errorMessage = error.message;
     alert(`Ошибка регистрации: ${errorCode}`, errorMessage);
     console.error(`Ошибка регистрации: ${errorCode}`);
 
   }
+  formElement.reset();
 }
 
 
@@ -75,11 +79,14 @@ export async function handleSignIn(formElement) {
   const password = passwordInput.value;
 
   try {
+    startLoading();
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     console.log("Пользователь вошел:", user);
+    endLoading();
     switchScreen('mainJS');
   } catch(error) {
+    endLoading();
     const errorCode = error.code;
     const errorMessage = error.message;
     console.error("Ошибка при входе:", errorCode, errorMessage);

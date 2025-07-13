@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ёжки-мышки</title>
     <link rel="icon" href="/assets/1-DzcolSN_.png">
-  <script type="module" crossorigin src="/assets/index-bt47WDs2.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CfL3Ocaq.css">
+  <script type="module" crossorigin src="/assets/index-2QQiBFnt.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-9AflRPMI.css">
 </head>
 <body>
     <div class="background"></div>
@@ -49,51 +49,52 @@
         </div>
         <div class="screen level" id="levelEasyJS">
             <div class="status-bar">
-                <p class="text-item font-main moves-counter"></p>
-                <p class="text-item font-main difficulty">Лёгкий</p>
+                <p class="text-item font-main" data-selectorJS="moves-counter"></p>
+                <p class="text-item font-main">Лёгкий</p>
             </div>
             <div class="cards layout-12"></div>
             <div class="control-bar">
                 <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
-                    <button class="btn level-btn font-main next-level-btn" data-action="startNormal">Следующий уровень</button>
-                    <button class="btn level-btn font-main try-again-btn" data-action="startEasy">Попробовать ещё раз</button>
+                    <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="next-level-btn">Следующий уровень</button>
+                    <button class="btn level-btn font-main" data-action="startEasy" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
                 </div>
             </div>
-            <p class="font-header text-lvl-ended text-victory">Победа!</p>
-            <p class="font-header text-lvl-ended text-defeat">Поражение(</p>
+            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
         <div class="screen level" id="levelNormalJS">
             <div class="status-bar">
-                <p class="text-item font-main moves-counter"></p>
-                <p class="text-item font-main difficulty">Средний</p>
+                <p class="text-item font-main" data-selectorJS="moves-counter"></p>
+                <p class="text-item font-main">Средний</p>
             </div>
             <div class="cards layout-18"></div>
             <div class="control-bar">
                 <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
-                    <button class="btn level-btn font-main next-level-btn" data-action="startHard">Следующий уровень</button>
-                    <button class="btn level-btn font-main try-again-btn" data-action="startNormal">Попробовать ещё раз</button>
+                    <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="next-level-btn">Следующий уровень</button>
+                    <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
                 </div>
             </div>
-            <p class="font-header text-lvl-ended text-victory">Победа!</p>
-            <p class="font-header text-lvl-ended text-defeat">Поражение(</p>
+            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
         <div class="screen level" id="levelHardJS">
             <div class="status-bar">
-                <p class="text-item font-main moves-counter"></p>
-                <p class="text-item font-main difficulty">Сложный</p>
+                <p class="text-item font-main" data-selectorJS="moves-counter"></p>
+                <p class="text-item font-main">Сложный</p>
             </div>
             <div class="cards layout-24"></div>
             <div class="control-bar">
                 <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
-                    <button class="btn level-btn font-main try-again-btn" data-action="startHard">Попробовать ещё раз</button>
+                    <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
                 </div>
             </div>
-            <p class="font-header text-lvl-ended text-victory">Победа!</p>
-            <p class="font-header text-lvl-ended text-defeat">Поражение(</p>
+            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
+        <p class="text-overlay-hiden font-header" id="loadingTextJS">...</p>
     </div>
 </body>
 </html>

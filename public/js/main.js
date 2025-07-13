@@ -4,6 +4,7 @@ import { getFirestore, getDoc, doc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
 import { handleRegistration, handleSignIn } from './auth.js';
+import { startLoading, endLoading } from './loading.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_k8EUQgEdFfsUCDJs3RGuIQ4sTXXXi4M",
@@ -23,7 +24,6 @@ export { auth };
 
 const db = getFirestore(app);
 export { db };
-
 
 // обработчик события кнопки "Назад"
 document.querySelectorAll('[data-action="back"]').forEach((btn) => {
@@ -64,7 +64,7 @@ document.querySelector('[data-action="signIn"]').addEventListener("click", () =>
 const signUpForm = document.getElementById('signUpFormJS')
 signUpForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    handleRegistration();
+    handleRegistration(event.target);
 })
 
 // обработчик события кнопки Войти
