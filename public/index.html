@@ -44,7 +44,14 @@
             <button class="btn font-main" data-action="back">Назад</button>    
         </div>
         <div class="screen account" id="accountJS">
-            <button class="btn font-main" data-action="SignOut">Выйти из аккаунта</button>
+            <p class="font-small-pale">Подтвердите почту, чтобы попасть в таблицу лидеров!</p>
+            <button class="btn font-main" data-action="sendEmail">Отправить письмо для подтверждения почты</button>
+            <div class="hidden" id="EmailSentTextJS">
+                <p class="text-item font-main">Письмо отправлено!</p>
+                <p class="text-item font-small-pale">Проверьте папку Спам</p>
+            </div>
+
+            <button class="btn font-main" data-action="signOut">Выйти из аккаунта</button>
             <button class="btn font-main" data-action="back">Назад</button>
         </div>
         <div class="screen level" id="levelEasyJS">
@@ -60,8 +67,8 @@
                     <button class="btn level-btn font-main" data-action="startEasy" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
                 </div>
             </div>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
         <div class="screen level" id="levelNormalJS">
             <div class="status-bar">
@@ -76,8 +83,8 @@
                     <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
                 </div>
             </div>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
         <div class="screen level" id="levelHardJS">
             <div class="status-bar">
@@ -91,10 +98,10 @@
                     <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
                 </div>
             </div>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
-        <p class="text-overlay-hiden font-header" id="loadingTextJS">...</p>
+        <p class="text-overlay-hidden font-header" id="loadingTextJS">...</p>
     </div>
     <script type="module" src="./js/main.js"></script>
 </body>

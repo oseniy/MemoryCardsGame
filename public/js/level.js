@@ -63,10 +63,10 @@ export default function startLevel(difficulty) {
         console.log("reset cards")
         if (cardsContainer.classList.contains('transparent')) {
             cardsContainer.classList.remove('transparent')
-            textVictory.classList.replace('text-overlay-active', 'text-overlay-hiden')
-            textDefeat.classList.replace('text-overlay-active', 'text-overlay-hiden')
-            if (difficulty != 'levelHardJS') nextLevelBtn.classList.replace('text-overlay-active', 'text-overlay-hiden');
-            tryAgainBtn.classList.replace('text-overlay-active', 'text-overlay-hiden')
+            textVictory.classList.replace('text-overlay-active', 'text-overlay-hidden')
+            textDefeat.classList.replace('text-overlay-active', 'text-overlay-hidden')
+            if (difficulty != 'levelHardJS') nextLevelBtn.classList.replace('text-overlay-active', 'text-overlay-hidden');
+            tryAgainBtn.classList.replace('text-overlay-active', 'text-overlay-hidden')
         }
 
         cardsContainer.innerHTML = '';
@@ -111,7 +111,6 @@ export default function startLevel(difficulty) {
                 flipped.push(card);
 
                 if (flipped.length === 2) {
-                    defeat()
                     lock = true;
                     const [a, b] = flipped;
                     if (a.dataset.value === b.dataset.value) {
@@ -144,7 +143,7 @@ export default function startLevel(difficulty) {
         }
         cardsContainer.classList.add('transparent')
 
-        textVictory.classList.replace('text-overlay-hiden', 'text-overlay-active')
+        textVictory.classList.replace('text-overlay-hidden', 'text-overlay-active')
     }
 
     function defeat() {
@@ -156,7 +155,7 @@ export default function startLevel(difficulty) {
 
         cardsContainer.classList.add('transparent')
 
-        textDefeat.classList.replace('text-overlay-hiden', 'text-overlay-active')
+        textDefeat.classList.replace('text-overlay-hidden', 'text-overlay-active')
     }
 
     function doDamage() {

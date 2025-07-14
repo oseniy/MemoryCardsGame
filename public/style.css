@@ -110,7 +110,7 @@ body {
     opacity: 0.5;
 }
 
-.text-overlay-hiden {
+.text-overlay-hidden {
     position: absolute;
     opacity: 0;
     z-index: -1;
@@ -125,8 +125,12 @@ body {
 /* анимация */
 
 /* items */
+
+.hidden {
+    display: none !important;
+}
+
 .btn {
-    all: unset;
     margin: clamp(0.5rem, 2vmin, 1.25rem);
     transition: transform 0.2s ease;
     display: flex;

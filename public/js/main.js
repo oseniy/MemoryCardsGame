@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
-import { handleRegistration, handleSignIn } from './auth.js';
+import { handleRegistration, handleSignIn, sendEmail } from './auth.js';
 import { startLoading, endLoading } from './loading.js';
 
 const firebaseConfig = {
@@ -95,7 +95,7 @@ async function handleSignOut() {
     }
 }
 
-document.querySelector('[data-action="SignOut"]').addEventListener("click", () => {
+document.querySelector('[data-action="signOut"]').addEventListener("click", () => {
     handleSignOut();
 })
 
@@ -111,8 +111,12 @@ async function getUsername(user) {
     }
 }
 
+document.querySelector('[data-action="sendEmail"]').addEventListener("click", () => {
+    sendEmail();
+})
 
 function showLoggedInUI(user) {
+    startLoading();
     getUsername(user).then( username => {
         if (username) {
             accountBtn.textContent = `
@@ -122,6 +126,7 @@ function showLoggedInUI(user) {
     })
     authArea.classList.add('disable');
     usernameArea.classList.remove('disable');
+    endLoading();
 }
 
 function showLoggedOutUI() {

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import { auth } from "./main.js";
@@ -93,4 +93,54 @@ export async function handleSignIn(formElement) {
     alert(`Ошибка при входе:, ${errorCode}`);
   }
   formElement.reset();
+}
+
+
+// страница аккаунта
+
+const sendEmailBtn = document.querySelector('[data-action="sendEmail"]');
+const EmailSentText = document.getElementById('EmailSentTextJS');
+
+export async function sendEmail() {
+  const user = auth.currentUser;
+
+  if (user) {
+    startLoading();
+    sendEmailVerification(user)
+      .then(() => {
+        // Письмо с подтверждением успешно отправлено!
+        // Расскажи пользователю, что ему нужно проверить свою почту.
+        endLoading();
+        console.log("Письмо с подтверждением отправлено!");
+        EmailSentAnimation();
+        // Может быть, показать сообщение вроде: "Пожалуйста, проверьте свою почту для подтверждения адреса."
+      })
+      .catch((error) => {
+        endLoading();
+        // Ой, что-то пошло не так при отправке письма.
+        // Обработай ошибку, например, покажи сообщение пользователю.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Ошибка при отправке письма с подтверждением:", errorCode, errorMessage);
+        alert(`Ошибка при отправке письма с подтверждением:, ${errorCode}`);
+      });
+  } else {
+    // Пользователь не авторизован.
+    // Это может произойти, если пользователь не вошел в систему или его сессия истекла.
+    console.log("Нет авторизованного пользователя для отправки подтверждения.");
+  }
+}
+
+export function EmailSentAnimation() {
+  sendEmailBtn.classList.add('slide-out');
+  sendEmailBtn.addEventListener('animationend', () => {
+    sendEmailBtn.classList.add('hidden');
+    sendEmailBtn.classList.remove('slide-out');
+    EmailSentText.classList.add('slide-in');
+    EmailSentText.classList.remove('hidden');
+    EmailSentText.addEventListener('animationend', () => {
+      EmailSentText.classList.remove('slide-in');
+    }, {once: true});
+  }, {once: true});
+
 }

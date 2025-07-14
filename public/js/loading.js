@@ -28,12 +28,12 @@ export function startLoading() {
     const screen = document.querySelector('.screen.active');
     screen.classList.add('transparent');
     animator.start();
-    loadingText.classList.replace('text-overlay-hiden', 'text-overlay-active');
+    loadingText.classList.replace('text-overlay-hidden', 'text-overlay-active');
 }
 
 export function endLoading() {
     const screen = document.querySelector('.screen.active');
     screen.classList.remove('transparent');
     animator.stop();
-    loadingText.classList.replace('text-overlay-active', 'text-overlay-hiden');
+    loadingText.classList.replace('text-overlay-active', 'text-overlay-hidden');
 }
