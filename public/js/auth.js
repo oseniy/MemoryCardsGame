@@ -100,13 +100,17 @@ export async function handleSignIn(formElement) {
 
 const sendEmailBtn = document.querySelector('[data-action="sendEmail"]');
 const EmailSentText = document.getElementById('EmailSentTextJS');
+const continueUrl = {
+  url: 'https://memorycardsgame-6b7d9.web.app/',
+  handleCodeInApp: true
+}
 
 export async function sendEmail() {
   const user = auth.currentUser;
 
   if (user) {
     startLoading();
-    sendEmailVerification(user)
+    sendEmailVerification(user, continueUrl)
       .then(() => {
         // Письмо с подтверждением успешно отправлено!
         // Расскажи пользователю, что ему нужно проверить свою почту.

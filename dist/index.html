@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ёжки-мышки</title>
-    <link rel="icon" href="/assets/1-DzcolSN_.png">
-
-
-  <script type="module" crossorigin src="/assets/index-2QQiBFnt.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-9AflRPMI.css">
+    <link rel="icon" href="/assets/1-DzcolSN_.png">
+  <script type="module" crossorigin src="/assets/index-Dic54LUL.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DEvYsqXj.css">
 </head>
 <body>
     <div class="background"></div>
@@ -46,7 +44,18 @@
             <button class="btn font-main" data-action="back">Назад</button>    
         </div>
         <div class="screen account" id="accountJS">
-            <button class="btn font-main" data-action="SignOut">Выйти из аккаунта</button>
+            <div class="" id="notVerifiedEmailBoxJS">
+                <p class="font-small-pale">Подтвердите почту, чтобы попасть в таблицу лидеров!</p>
+                <button class="btn font-main" data-action="sendEmail">Отправить письмо для подтверждения почты</button>
+                <div class="hidden" id="EmailSentTextJS">
+                    <p class="text-item font-main">Письмо отправлено!</p>
+                    <p class="text-item font-small-pale">Проверьте папку Спам</p>
+                </div>
+            </div>
+            <div class="hidden" id="verifiedEmailBoxJS">
+                <p class="text-item font-main">Почта подтверждена!</p>
+            </div>
+            <button class="btn font-main" data-action="signOut">Выйти из аккаунта</button>
             <button class="btn font-main" data-action="back">Назад</button>
         </div>
         <div class="screen level" id="levelEasyJS">
@@ -60,10 +69,10 @@
                 <div class="level-btn-container">
                     <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="next-level-btn">Следующий уровень</button>
                     <button class="btn level-btn font-main" data-action="startEasy" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
-                </div>hidden
-            </div>hidden
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
+                </div>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
         <div class="screen level" id="levelNormalJS">
             <div class="status-bar">
@@ -76,10 +85,10 @@
                 <div class="level-btn-container">
                     <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="next-level-btn">Следующий уровень</button>
                     <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
-                </div>hidden
-            </div>hidden
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
+                </div>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
         <div class="screen level" id="levelHardJS">
             <div class="status-bar">
@@ -91,13 +100,12 @@
                 <button class="btn font-main" data-action="back">Назад</button>
                 <div class="level-btn-container">
                     <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
-                </div>hidden
-            </div>hidden
-            <p class="font-header text-overlay-hiden" data-selectorJS="text-victory">Победа!</p>
-            <p class="font-headhiddenxt-overlay-hiden" data-selectorJS="text-defeat">Поражение(</p>
+                </div>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
         </div>
-        <p class="text-overlay-hiden font-header" id="loadingTextJS">...</p>
-    </div>
-
+        <p class="text-overlay-hidden font-header" id="loadingTextJS">...</p>
+    </div>
 </body>
 </html>

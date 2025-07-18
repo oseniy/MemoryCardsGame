@@ -44,13 +44,17 @@
             <button class="btn font-main" data-action="back">Назад</button>    
         </div>
         <div class="screen account" id="accountJS">
-            <p class="font-small-pale">Подтвердите почту, чтобы попасть в таблицу лидеров!</p>
-            <button class="btn font-main" data-action="sendEmail">Отправить письмо для подтверждения почты</button>
-            <div class="hidden" id="EmailSentTextJS">
-                <p class="text-item font-main">Письмо отправлено!</p>
-                <p class="text-item font-small-pale">Проверьте папку Спам</p>
+            <div class="" id="notVerifiedEmailBoxJS">
+                <p class="font-small-pale">Подтвердите почту, чтобы попасть в таблицу лидеров!</p>
+                <button class="btn font-main" data-action="sendEmail">Отправить письмо для подтверждения почты</button>
+                <div class="hidden" id="EmailSentTextJS">
+                    <p class="text-item font-main">Письмо отправлено!</p>
+                    <p class="text-item font-small-pale">Проверьте папку Спам</p>
+                </div>
             </div>
-
+            <div class="hidden" id="verifiedEmailBoxJS">
+                <p class="text-item font-main">Почта подтверждена!</p>
+            </div>
             <button class="btn font-main" data-action="signOut">Выйти из аккаунта</button>
             <button class="btn font-main" data-action="back">Назад</button>
         </div>

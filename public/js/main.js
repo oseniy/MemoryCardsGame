@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onIdTokenChanged, signOut, reload } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
@@ -77,7 +77,9 @@ signInForm.addEventListener('submit', (event) => {
 // отображение области аутентификации
 const authArea = document.getElementById('authAreaJS');
 const usernameArea = document.getElementById('usernameJS');
-const accountBtn = document.querySelector('[data-action="account"]')
+const accountBtn = document.querySelector('[data-action="account"]');
+const notVerifiedEmailBox = document.getElementById('notVerifiedEmailBoxJS');
+const VerifiedEmailBox = document.getElementById('verifiedEmailBoxJS');
 
 // обработчик события кнопки Аккаунта
 accountBtn.addEventListener("click", () => {
@@ -115,15 +117,15 @@ document.querySelector('[data-action="sendEmail"]').addEventListener("click", ()
     sendEmail();
 })
 
-function showLoggedInUI(user) {
+async function showLoggedInUI(user) {
     startLoading();
-    getUsername(user).then( username => {
-        if (username) {
-            accountBtn.textContent = `
-                ${username}
-            `;
-        }
-    })
+
+    const username = await getUsername(user);
+
+    if (username) {
+        accountBtn.textContent = username;
+    }
+
     authArea.classList.add('disable');
     usernameArea.classList.remove('disable');
     endLoading();
@@ -134,9 +136,39 @@ function showLoggedOutUI() {
     usernameArea.classList.add('disable');
 }
 
-onAuthStateChanged(auth, (user) => {
+function showEmailVerified() {
+    notVerifiedEmailBox.classList.add("hidden");
+    VerifiedEmailBox.classList.remove("hidden");
+}
+
+function showEmailNotVerified() {
+    VerifiedEmailBox.classList.add("hidden");
+    notVerifiedEmailBox.classList.remove("hidden");
+}
+
+window.onfocus = async () => {
+  const user = auth.currentUser;
   if (user) {
-    showLoggedInUI(user);
+    console.log("Окно получило фокус. Пробуем обновить данные пользователя...");
+    try {
+      await reload(user); // Вызываем reload при фокусе
+      console.log("релоад сработал")
+      // После reload() onIdTokenChanged сработает снова с обновленными данными
+    } catch (error) {
+      console.error("Ошибка при обновлении данных пользователя:", error);
+    }
+  }
+};
+
+onIdTokenChanged(auth, async (user) => {
+    console.log("onIdTokenChanged сработала")
+  if (user) {
+    await showLoggedInUI(user);
+    if (user.emailVerified) {
+        showEmailVerified();
+    } else {
+        showEmailNotVerified();
+    }
   } else {
     showLoggedOutUI();
   }
