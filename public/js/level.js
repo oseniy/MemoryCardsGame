@@ -1,3 +1,6 @@
+import { doc, runTransaction } from 'firebase/firestore';
+import { auth } from "./main.js";
+import { db } from "./main.js";
 import switchScreen from "./switchScreen.js";
 import png1 from "../assets/imgs/1.png";
 import png2 from "../assets/imgs/2.png";
@@ -41,8 +44,10 @@ export default function startLevel(difficulty) {
     const textVictory = level.querySelector('[data-selectorJS="text-victory"]')
     const textDefeat = level.querySelector('[data-selectorJS="text-defeat"]')
 
+    let HPs;
     let HPsLeft;
     let totalPairs;
+    let HPsPenalty;
     
     const colors = [ 
         "#FFD1DC", "#B5EAD7", "#C7CEEA", "#E2F0CB", 
@@ -52,10 +57,11 @@ export default function startLevel(difficulty) {
 
     const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
     
-    if (difficulty === 'levelEasyJS') {HPsLeft = 8; totalPairs = 6};
-    if (difficulty === 'levelNormalJS') {HPsLeft =14; totalPairs = 9};
-    if (difficulty === 'levelHardJS') {HPsLeft = 16; totalPairs = 12};
+    if (difficulty === 'levelEasyJS') {HPs = 8; totalPairs = 6; HPsPenalty = 2600};
+    if (difficulty === 'levelNormalJS') {HPs =14; totalPairs = 9; HPsPenalty = 3000};
+    if (difficulty === 'levelHardJS') {HPs = 16; totalPairs = 12; HPsPenalty = 5400};
 
+    HPsLeft = HPs;
     movesCounter.textContent = `Жизней: ${HPsLeft}`;
 
     // Прочистка поля и перемешивание карточек
@@ -111,7 +117,7 @@ export default function startLevel(difficulty) {
         let pairsFound = 0;
         let firstCardFlipped = false;
         cards.forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', async () => {
                 if (lock || card.classList.contains('flipped')) return;
                 card.classList.add('flipped');
                 flipped.push(card);
@@ -126,7 +132,14 @@ export default function startLevel(difficulty) {
                         flipped = [];
                         lock = false;
                         pairsFound += 1;
-                        if (pairsFound == totalPairs) victory();
+                        if (pairsFound == totalPairs) {
+                            try {
+                                await victory();
+                            } catch (error) {
+                                console.error("Ошибка при обновлении рекорда:", error);
+                                throw error;
+                            }
+                        }
                     } else {
                         setTimeout(() => {
                             a.classList.remove('flipped');
@@ -142,10 +155,19 @@ export default function startLevel(difficulty) {
         });
     }
 
-    function victory() {
+    async function victory() {
         stopLevelTimer();
+        let HPsLost = HPs - HPsLeft;
+        const penaltyPoints = timeSpentMs + HPsLost * HPsPenalty;
+        try {
+            await updateBestScore(penaltyPoints);
+        } catch (error) {
+            console.error("Ошибка при обновлении рекорда:", error);
+            throw error;
+        }
         console.log('Жизней осталось: ', HPsLeft);
         console.log('время на уровне: ', timeSpentMs);
+        console.log('штрафных очков: ', penaltyPoints);
         if (difficulty != 'levelHardJS') {
             nextLevelBtn.classList.add('slide-in');
             nextLevelBtn.classList.add('active');
@@ -196,3 +218,37 @@ export default function startLevel(difficulty) {
     }
 }
 
+async function updateBestScore(currentResult) {
+    const user = auth.currentUser;
+    if (!user) return;
+    const uid = user.uid;
+
+    const userDocRef = doc(db, 'users', uid);
+
+    try {
+        await runTransaction(db, async (transaction) => {
+            const userDoc = await transaction.get(userDocRef);
+            let existingBestScore = null;
+
+            if (!userDoc.exists()) {
+                console.error('документа пользователя не существует');
+                return;
+            }
+
+            const data = userDoc.data();
+            if (typeof data.bestScore === 'number') {
+                existingBestScore = data.bestScore;
+            }                
+
+            if (currentResult < existingBestScore) {
+                transaction.update(userDocRef, { bestScore: currentResult });
+                console.log(`Рекорд игрока ${uid} обновлен с ${existingBestScore === null ? 'отсутствующего' : existingBestScore} до: ${currentResult}`);
+            } else {
+                console.log(`Текущий результат (${currentResult}) не превышает существующий рекорд (${existingBestScore}). Рекорд не обновлен.`);
+            }
+        })
+    } catch (error) {
+        console.error("Ошибка при обновлении рекорда в транзакции:", error);
+        throw error;
+    }
+}
