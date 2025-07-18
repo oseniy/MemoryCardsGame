@@ -25,15 +25,17 @@ function createDotsAnimator(loadingText) {
 }
 
 export function startLoading() { 
-    const screen = document.querySelector('.screen.active');
-    screen.classList.add('transparent');
+    console.log('loading started');
+    const appWrapper = document.querySelector('.app-wrapper');
+    appWrapper.classList.add('transparent');
     animator.start();
     loadingText.classList.replace('text-overlay-hidden', 'text-overlay-active');
 }
 
 export function endLoading() {
-    const screen = document.querySelector('.screen.active');
-    screen.classList.remove('transparent');
+    console.log('loading ended');
+    const appWrapper = document.querySelector('.app-wrapper');
+    appWrapper.classList.remove('transparent');
     animator.stop();
     loadingText.classList.replace('text-overlay-active', 'text-overlay-hidden');
 }

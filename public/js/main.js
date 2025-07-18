@@ -152,7 +152,6 @@ window.onfocus = async () => {
     console.log("Окно получило фокус. Пробуем обновить данные пользователя...");
     try {
       await reload(user); // Вызываем reload при фокусе
-      console.log("релоад сработал")
       // После reload() onIdTokenChanged сработает снова с обновленными данными
     } catch (error) {
       console.error("Ошибка при обновлении данных пользователя:", error);

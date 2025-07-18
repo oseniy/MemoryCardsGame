@@ -27,6 +27,10 @@ const images = {
     12: png12,
 };
 
+let levelStartTime = null;
+let timeSpentMs = 0;
+let timerStarted = false;
+
 export default function startLevel(difficulty) {
 
     const level = document.getElementById(difficulty)
@@ -61,6 +65,7 @@ export default function startLevel(difficulty) {
 
     function resetCards() {
         console.log("reset cards")
+        stopLevelTimer();
         if (cardsContainer.classList.contains('transparent')) {
             cardsContainer.classList.remove('transparent')
             textVictory.classList.replace('text-overlay-active', 'text-overlay-hidden')
@@ -104,12 +109,16 @@ export default function startLevel(difficulty) {
         let flipped = [];
         let lock = false;
         let pairsFound = 0;
+        let firstCardFlipped = false;
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 if (lock || card.classList.contains('flipped')) return;
                 card.classList.add('flipped');
                 flipped.push(card);
-
+                if (!firstCardFlipped) {
+                    startLevelTimer();
+                    firstCardFlipped = true;
+                }
                 if (flipped.length === 2) {
                     lock = true;
                     const [a, b] = flipped;
@@ -134,6 +143,9 @@ export default function startLevel(difficulty) {
     }
 
     function victory() {
+        stopLevelTimer();
+        console.log('Жизней осталось: ', HPsLeft);
+        console.log('время на уровне: ', timeSpentMs);
         if (difficulty != 'levelHardJS') {
             nextLevelBtn.classList.add('slide-in');
             nextLevelBtn.classList.add('active');
@@ -169,6 +181,18 @@ export default function startLevel(difficulty) {
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+    }
+
+    function startLevelTimer() {
+        if (timerStarted) return;
+        levelStartTime = Date.now();
+        timerStarted = true;
+    }
+
+    function stopLevelTimer() {
+        if (!timerStarted || levelStartTime === null) return;
+        timeSpentMs = Date.now() - levelStartTime;
+        timerStarted = false;
     }
 }
 
