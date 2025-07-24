@@ -38,16 +38,18 @@ export default function startLevel(difficulty) {
 
     const level = document.getElementById(difficulty)
     const cardsContainer = level.querySelector('.cards');
-    const movesCounter =  level.querySelector('[data-selectorJS="moves-counter"]')
+    const movesCounter =  level.querySelector('[data-selectorJS="moves-counter"]');
     const nextLevelBtn = level.querySelector('[data-selectorJS="next-level-btn"]');
     const tryAgainBtn = level.querySelector('[data-selectorJS="try-again-btn"]');
-    const textVictory = level.querySelector('[data-selectorJS="text-victory"]')
-    const textDefeat = level.querySelector('[data-selectorJS="text-defeat"]')
+    const textVictory = level.querySelector('[data-selectorJS="text-victory"]');
+    const textbestScoreUpdated = level.querySelector('[data-selectorJS="text-bestScoreUpdated"]');
+    const textDefeat = level.querySelector('[data-selectorJS="text-defeat"]');
 
     let HPs;
     let HPsLeft;
     let totalPairs;
     let HPsPenalty;
+    let bestScoreKey;
     
     const colors = [ 
         "#FFD1DC", "#B5EAD7", "#C7CEEA", "#E2F0CB", 
@@ -57,9 +59,9 @@ export default function startLevel(difficulty) {
 
     const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
     
-    if (difficulty === 'levelEasyJS') {HPs = 8; totalPairs = 6; HPsPenalty = 2600};
-    if (difficulty === 'levelNormalJS') {HPs =14; totalPairs = 9; HPsPenalty = 3000};
-    if (difficulty === 'levelHardJS') {HPs = 16; totalPairs = 12; HPsPenalty = 5400};
+    if (difficulty === 'levelEasyJS') {HPs = 8; totalPairs = 6; HPsPenalty = 2600, bestScoreKey = 'bestScoreEasy'};
+    if (difficulty === 'levelNormalJS') {HPs =14; totalPairs = 9; HPsPenalty = 3000, bestScoreKey = 'bestScoreNormal'};
+    if (difficulty === 'levelHardJS') {HPs = 16; totalPairs = 12; HPsPenalty = 5400, bestScoreKey = 'bestScoreHard'};
 
     HPsLeft = HPs;
     movesCounter.textContent = `Жизней: ${HPsLeft}`;
@@ -76,6 +78,7 @@ export default function startLevel(difficulty) {
             cardsContainer.classList.remove('transparent')
             textVictory.classList.replace('text-overlay-active', 'text-overlay-hidden')
             textDefeat.classList.replace('text-overlay-active', 'text-overlay-hidden')
+            textbestScoreUpdated.classList.replace('text-overlay-active', 'text-overlay-hidden');
             if (difficulty != 'levelHardJS') nextLevelBtn.classList.replace('text-overlay-active', 'text-overlay-hidden');
             tryAgainBtn.classList.replace('text-overlay-active', 'text-overlay-hidden')
         }
@@ -159,8 +162,9 @@ export default function startLevel(difficulty) {
         stopLevelTimer();
         let HPsLost = HPs - HPsLeft;
         const penaltyPoints = timeSpentMs + HPsLost * HPsPenalty;
+        let bestScoreUpdated
         try {
-            await updateBestScore(penaltyPoints);
+            bestScoreUpdated = await updateBestScore(bestScoreKey, penaltyPoints);
         } catch (error) {
             console.error("Ошибка при обновлении рекорда:", error);
             throw error;
@@ -176,8 +180,10 @@ export default function startLevel(difficulty) {
             }, { once: true })
         }
         cardsContainer.classList.add('transparent')
-
-        textVictory.classList.replace('text-overlay-hidden', 'text-overlay-active')
+        console.log(bestScoreUpdated)
+        if (bestScoreUpdated) {
+            textbestScoreUpdated.classList.replace('text-overlay-hidden', 'text-overlay-active');
+        } else textVictory.classList.replace('text-overlay-hidden', 'text-overlay-active')
     }
 
     function defeat() {
@@ -218,17 +224,16 @@ export default function startLevel(difficulty) {
     }
 }
 
-async function updateBestScore(currentResult) {
+async function updateBestScore(key, currentResult) {
     const user = auth.currentUser;
     if (!user) return;
     const uid = user.uid;
-
     const userDocRef = doc(db, 'users', uid);
-
+    let bestScoreUpdated;
     try {
-        await runTransaction(db, async (transaction) => {
+        bestScoreUpdated = await runTransaction(db, async (transaction) => {
             const userDoc = await transaction.get(userDocRef);
-            let existingBestScore = null;
+            let existingBestScore = Infinity;
 
             if (!userDoc.exists()) {
                 console.error('документа пользователя не существует');
@@ -236,19 +241,22 @@ async function updateBestScore(currentResult) {
             }
 
             const data = userDoc.data();
-            if (typeof data.bestScore === 'number') {
-                existingBestScore = data.bestScore;
+            if (typeof data[key] === 'number') {
+                existingBestScore = data[key];
             }                
 
             if (currentResult < existingBestScore) {
-                transaction.update(userDocRef, { bestScore: currentResult });
-                console.log(`Рекорд игрока ${uid} обновлен с ${existingBestScore === null ? 'отсутствующего' : existingBestScore} до: ${currentResult}`);
+                transaction.update(userDocRef, { [key]: currentResult });
+                console.log(`Рекорд игрока ${uid} обновлен с ${existingBestScore === Infinity ? 'отсутствующего' : existingBestScore} до: ${currentResult}`);
+                return true;
             } else {
                 console.log(`Текущий результат (${currentResult}) не превышает существующий рекорд (${existingBestScore}). Рекорд не обновлен.`);
+                return false;
             }
         })
     } catch (error) {
         console.error("Ошибка при обновлении рекорда в транзакции:", error);
         throw error;
     }
+    return bestScoreUpdated;
 }
