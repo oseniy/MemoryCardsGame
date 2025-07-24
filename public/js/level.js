@@ -1,4 +1,4 @@
-import { doc, runTransaction } from 'firebase/firestore';
+import { doc, runTransaction, getDoc } from 'firebase/firestore';
 import { auth } from "./main.js";
 import { db } from "./main.js";
 import switchScreen from "./switchScreen.js";
@@ -162,9 +162,10 @@ export default function startLevel(difficulty) {
         stopLevelTimer();
         let HPsLost = HPs - HPsLeft;
         const penaltyPoints = timeSpentMs + HPsLost * HPsPenalty;
-        let bestScoreUpdated
+        let newBest;
         try {
-            bestScoreUpdated = await updateBestScore(bestScoreKey, penaltyPoints);
+            newBest = await isThisANewBest(bestScoreKey, penaltyPoints)
+            console.log(newBest);
         } catch (error) {
             console.error("Ошибка при обновлении рекорда:", error);
             throw error;
@@ -180,9 +181,9 @@ export default function startLevel(difficulty) {
             }, { once: true })
         }
         cardsContainer.classList.add('transparent')
-        console.log(bestScoreUpdated)
-        if (bestScoreUpdated) {
+        if (newBest) {
             textbestScoreUpdated.classList.replace('text-overlay-hidden', 'text-overlay-active');
+            updateBestScore(bestScoreKey, penaltyPoints, HPsLeft, timeSpentMs);
         } else textVictory.classList.replace('text-overlay-hidden', 'text-overlay-active')
     }
 
@@ -224,39 +225,40 @@ export default function startLevel(difficulty) {
     }
 }
 
-async function updateBestScore(key, currentResult) {
+async function isThisANewBest(key, currentResult) {
+    const user = auth.currentUser;
+    if (!user) return;
+    const uid = user.uid;
+    const userDocRef = doc(db, 'users', uid); 
+    const userDocSnap = await getDoc(userDocRef);
+    const data = userDocSnap.data();
+    if ( typeof data[key] === 'object') {
+        if (currentResult < data[key].Score) {return true}
+        else {return false};
+    } else {
+        return true
+    }
+} 
+
+async function updateBestScore(key, currentResult, HPs, time) {
     const user = auth.currentUser;
     if (!user) return;
     const uid = user.uid;
     const userDocRef = doc(db, 'users', uid);
-    let bestScoreUpdated;
     try {
-        bestScoreUpdated = await runTransaction(db, async (transaction) => {
-            const userDoc = await transaction.get(userDocRef);
-            let existingBestScore = Infinity;
-
-            if (!userDoc.exists()) {
-                console.error('документа пользователя не существует');
-                return;
+        await runTransaction(db, async (transaction) => { {
+            transaction.update(userDocRef, { [key]: {
+                Score: currentResult,
+                HPs: HPs,
+                time:time
             }
-
-            const data = userDoc.data();
-            if (typeof data[key] === 'number') {
-                existingBestScore = data[key];
-            }                
-
-            if (currentResult < existingBestScore) {
-                transaction.update(userDocRef, { [key]: currentResult });
-                console.log(`Рекорд игрока ${uid} обновлен с ${existingBestScore === Infinity ? 'отсутствующего' : existingBestScore} до: ${currentResult}`);
-                return true;
-            } else {
-                console.log(`Текущий результат (${currentResult}) не превышает существующий рекорд (${existingBestScore}). Рекорд не обновлен.`);
-                return false;
+             });
+            console.log(`Рекорд игрока ${uid} обновлен`);
+            return true;
             }
         })
     } catch (error) {
         console.error("Ошибка при обновлении рекорда в транзакции:", error);
         throw error;
     }
-    return bestScoreUpdated;
 }
