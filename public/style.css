@@ -313,6 +313,20 @@ input {
 }
 /* анимация */
 
+.best-scores-table {
+    border: 0.3rem solid black;
+    border-radius: 15px; 
+    margin: 0 10%;
+}
+
+.best-score-table__row {
+    display: flex;
+}
+
+.best-score-table__element {
+    flex: 1;
+}
+
 /* карточки */
 @media (min-aspect-ratio: 1.7) {
     .cards.layout-12 {

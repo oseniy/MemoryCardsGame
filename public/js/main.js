@@ -5,6 +5,7 @@ import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
 import { handleRegistration, handleSignIn, sendEmail } from './auth.js';
 import { startLoading, endLoading } from './loading.js';
+import {updateBestScoresTable} from './leaderdoard.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_k8EUQgEdFfsUCDJs3RGuIQ4sTXXXi4M",
@@ -84,6 +85,8 @@ const VerifiedEmailBox = document.getElementById('verifiedEmailBoxJS');
 // обработчик события кнопки Аккаунта
 accountBtn.addEventListener("click", () => {
     switchScreen("accountJS");
+    updateBestScoresTable();
+    
 });
 
 async function handleSignOut() {

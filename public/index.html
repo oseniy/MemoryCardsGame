@@ -56,8 +56,28 @@
                 <p class="text-item font-main">Почта подтверждена!</p>
             </div>
             <button class="btn font-main" data-action="signOut">Выйти из аккаунта</button>
+            <p class="text-item font-main">Рекорды</p>
             <div class="best-scores-table">
-
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Уровень</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Легкий</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="HPsEasy">-</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="timeEasy">-</p>
+                </div>
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Средний</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="HPsNormal">-</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="timeNormal">-</p>
+                </div>
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Сложный</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="HPsHard">-</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="timeHard">-</p>
+                </div>
             </div>
             <button class="btn font-main" data-action="back">Назад</button>
         </div>
