@@ -24,6 +24,54 @@
             <button class="btn font-main" data-action="startEasy">Легкий</button>
             <button class="btn font-main" data-action="startNormal">Средний</button>
             <button class="btn font-main" data-action="startHard">Сложный</button>
+            <button class="btn font-main" data-action="leaderBoard">Лидерборд</button>
+        </div>
+        <div class="screen" id="leaderBoardJS">
+            <h1 class="font-header">Лидерборд</h1>
+            <p class="font-small-pale">Выберите уровень</p>
+            <button class="btn font-main" data-action="leaderBoardEasy">Легкий</button>
+            <button class="btn font-main" data-action="leaderBoardNormal">Средний</button>
+            <button class="btn font-main" data-action="leaderBoardHard">Сложный</button>
+            <button class="btn font-main" data-action="back">Назад</button>
+        </div>
+        <div class="screen" id="leaderBoardEasyJS">
+            <p class="text-item font-main">Легкий</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Место</p>
+                    <p class="best-score-table__element font-small text-item">Игрок</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>                                
+                <div data-selectorJS="leaderBoardTableEasy"></div>
+            </div>
+            <button class="btn font-main" data-action="leaderBoardBack">Назад</button>
+        </div>
+        <div class="screen" id="leaderBoardNormalJS">
+            <p class="text-item font-main">Средний</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Место</p>
+                    <p class="best-score-table__element font-small text-item">Игрок</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>                                
+                <div data-selectorJS="leaderBoardTableNormal"></div>
+            </div>
+            <button class="btn font-main" data-action="leaderBoardBack">Назад</button>
+        </div>
+        <div class="screen" id="leaderBoardHardJS">
+            <p class="text-item font-main">Сложный</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Место</p>
+                    <p class="best-score-table__element font-small text-item">Игрок</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>                                
+                <div data-selectorJS="leaderBoardTableHard"></div>
+            </div>
+            <button class="btn font-main" data-action="leaderBoardBack">Назад</button>
         </div>
         <div class="screen sign-in" id="signInJS">
             <form action="" method="POST" id="signInFormJS">

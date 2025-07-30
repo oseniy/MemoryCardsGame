@@ -34,6 +34,11 @@ body {
     cursor: default;
     font-size: clamp(1.5rem, 5vmin, 3rem);
 }
+
+.gold-color {
+ color: #E6C04D
+}
+
 /* шрифты */
 
 
@@ -272,6 +277,24 @@ input {
 
 /* лидерборд */
 
+.best-scores-table {
+    border: 0.3rem solid black;
+    border-radius: 15px; 
+    margin: 0 10%;
+    overflow-y: auto;
+    max-height: 70%;
+}
+
+.best-score-table__row {
+    display: flex;
+}
+
+.best-score-table__element {
+    flex: 1;
+    overflow: hidden;
+}
+
+
 /* лидерборд */
 
 /* медиа-запросы */
@@ -312,20 +335,6 @@ input {
     }
 }
 /* анимация */
-
-.best-scores-table {
-    border: 0.3rem solid black;
-    border-radius: 15px; 
-    margin: 0 10%;
-}
-
-.best-score-table__row {
-    display: flex;
-}
-
-.best-score-table__element {
-    flex: 1;
-}
 
 /* карточки */
 @media (min-aspect-ratio: 1.7) {
@@ -424,4 +433,9 @@ input {
 }
 /* control-bar */
 
+@media (orientation: portrait) {
+    .best-scores-table {
+        max-height: 60%;
+    }
+}
 /* медиа-запросы */

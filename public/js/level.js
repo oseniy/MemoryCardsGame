@@ -72,15 +72,14 @@ export default function startLevel(difficulty) {
     switchScreen(difficulty);
 
     function resetCards() {
-        console.log("reset cards")
         stopLevelTimer();
         if (cardsContainer.classList.contains('transparent')) {
             cardsContainer.classList.remove('transparent')
             textVictory.classList.replace('text-overlay-active', 'text-overlay-hidden')
             textDefeat.classList.replace('text-overlay-active', 'text-overlay-hidden')
             textbestScoreUpdated.classList.replace('text-overlay-active', 'text-overlay-hidden');
-            if (difficulty != 'levelHardJS') nextLevelBtn.classList.replace('text-overlay-active', 'text-overlay-hidden');
-            tryAgainBtn.classList.replace('text-overlay-active', 'text-overlay-hidden')
+            if (difficulty != 'levelHardJS') nextLevelBtn.classList.remove('active');
+            tryAgainBtn.classList.remove('active');
         }
 
         cardsContainer.innerHTML = '';

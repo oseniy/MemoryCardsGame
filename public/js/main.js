@@ -3,9 +3,9 @@ import { getAuth, onIdTokenChanged, signOut, reload } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import startLevel from "./level.js";
-import { handleRegistration, handleSignIn, sendEmail } from './auth.js';
+import { handleRegistration, handleSignIn, sendEmail, UpdateEmailVerified } from './auth.js';
 import { startLoading, endLoading } from './loading.js';
-import {updateBestScoresTable} from './leaderdoard.js';
+import {updateBestScoresTable, updateLeaderBoard} from './leaderdoard.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_k8EUQgEdFfsUCDJs3RGuIQ4sTXXXi4M",
@@ -167,6 +167,7 @@ onIdTokenChanged(auth, async (user) => {
   if (user) {
     await showLoggedInUI(user);
     if (user.emailVerified) {
+        UpdateEmailVerified(user);
         showEmailVerified();
     } else {
         showEmailNotVerified();
@@ -175,3 +176,28 @@ onIdTokenChanged(auth, async (user) => {
     showLoggedOutUI();
   }
 });
+
+document.querySelector('[data-action="leaderBoard"]').addEventListener("click", () => {
+    switchScreen("leaderBoardJS");
+});
+
+document.querySelector('[data-action="leaderBoardEasy"]').addEventListener("click", async () => {
+    updateLeaderBoard("bestScoreEasy");
+    switchScreen("leaderBoardEasyJS");
+});
+
+document.querySelector('[data-action="leaderBoardNormal"]').addEventListener("click", async () => {
+    updateLeaderBoard("bestScoreNormal");
+    switchScreen("leaderBoardNormalJS");
+});
+
+document.querySelector('[data-action="leaderBoardHard"]').addEventListener("click", async () => {
+    updateLeaderBoard("bestScoreHard");
+    switchScreen("leaderBoardHardJS");
+});
+
+document.querySelectorAll('[data-action="leaderBoardBack"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        switchScreen("leaderBoardJS");
+    })
+})

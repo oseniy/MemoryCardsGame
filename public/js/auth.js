@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { doc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, setDoc, collection, query, where, getDocs, updateDoc } from 'firebase/firestore';
 import switchScreen from "./switchScreen.js";
 import { auth } from "./main.js";
 import { db } from "./main.js";
@@ -147,4 +147,18 @@ export function EmailSentAnimation() {
     }, {once: true});
   }, {once: true});
 
+}
+
+export async function UpdateEmailVerified(user) {
+  console.log('UpdateEmailVerified')
+    if (!user) return;
+    const uid = user.uid;
+    const userDocRef = doc(db, 'users', uid);
+    try {
+        await updateDoc(userDocRef, {
+            emailVerified: true
+        });
+    } catch (error) {
+        console.error("Ошибка при обновлении статуса почты в базе данных:", error);
+    }
 }
