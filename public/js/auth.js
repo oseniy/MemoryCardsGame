@@ -82,8 +82,8 @@ export async function handleSignIn(formElement) {
     startLoading();
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    console.log("Пользователь вошел:", user);
     endLoading();
+    console.log("Пользователь вошел:", user);
     switchScreen('mainJS');
   } catch(error) {
     endLoading();
@@ -112,25 +112,18 @@ export async function sendEmail() {
     startLoading();
     sendEmailVerification(user, continueUrl)
       .then(() => {
-        // Письмо с подтверждением успешно отправлено!
-        // Расскажи пользователю, что ему нужно проверить свою почту.
         endLoading();
         console.log("Письмо с подтверждением отправлено!");
         EmailSentAnimation();
-        // Может быть, показать сообщение вроде: "Пожалуйста, проверьте свою почту для подтверждения адреса."
       })
       .catch((error) => {
         endLoading();
-        // Ой, что-то пошло не так при отправке письма.
-        // Обработай ошибку, например, покажи сообщение пользователю.
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error("Ошибка при отправке письма с подтверждением:", errorCode, errorMessage);
         alert(`Ошибка при отправке письма с подтверждением:, ${errorCode}`);
       });
   } else {
-    // Пользователь не авторизован.
-    // Это может произойти, если пользователь не вошел в систему или его сессия истекла.
     console.log("Нет авторизованного пользователя для отправки подтверждения.");
   }
 }
@@ -138,10 +131,10 @@ export async function sendEmail() {
 export function EmailSentAnimation() {
   sendEmailBtn.classList.add('slide-out');
   sendEmailBtn.addEventListener('animationend', () => {
-    sendEmailBtn.classList.add('hidden');
+    sendEmailBtn.classList.add('disable');
     sendEmailBtn.classList.remove('slide-out');
     EmailSentText.classList.add('slide-in');
-    EmailSentText.classList.remove('hidden');
+    EmailSentText.classList.remove('disable');
     EmailSentText.addEventListener('animationend', () => {
       EmailSentText.classList.remove('slide-in');
     }, {once: true});

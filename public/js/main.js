@@ -7,6 +7,15 @@ import { handleRegistration, handleSignIn, sendEmail, UpdateEmailVerified } from
 import { startLoading, endLoading } from './loading.js';
 import {updateBestScoresTable, updateLeaderBoard} from './leaderdoard.js';
 
+// фикс ресайза на айфонах
+function fixViewportHeight() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+fixViewportHeight();
+window.addEventListener('resize', fixViewportHeight);
+// фикс ресайза на айфонах
+
 const firebaseConfig = {
   apiKey: "AIzaSyD_k8EUQgEdFfsUCDJs3RGuIQ4sTXXXi4M",
   authDomain: "memorycardsgame-6b7d9.firebaseapp.com",
@@ -52,7 +61,7 @@ document.querySelectorAll('[data-action="startHard"]').forEach((btn) => {
     })
 });
 
-
+// обработчики событий кнопок Войти и Зарегистрироваться
 document.querySelector('[data-action="signUp"]').addEventListener("click", () => {
     switchScreen("signUpJS");
 });
@@ -61,14 +70,14 @@ document.querySelector('[data-action="signIn"]').addEventListener("click", () =>
     switchScreen("signInJS");
 });
 
-// обработчик события кнопки Зарегистрироваться
+// обработчик события кнопки регистрации аккаунта
 const signUpForm = document.getElementById('signUpFormJS')
 signUpForm.addEventListener('submit', (event) => {
     event.preventDefault();
     handleRegistration(event.target);
 })
 
-// обработчик события кнопки Войти
+// обработчик события кнопки входа в аккаунт
 const signInForm = document.getElementById('signInFormJS')
 signInForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -100,6 +109,7 @@ async function handleSignOut() {
     }
 }
 
+// обработчик события кнопоки выхода из аккаунта
 document.querySelector('[data-action="signOut"]').addEventListener("click", () => {
     handleSignOut();
 })
@@ -131,6 +141,7 @@ async function showLoggedInUI(user) {
 
     authArea.classList.add('disable');
     usernameArea.classList.remove('disable');
+
     endLoading();
 }
 
@@ -140,13 +151,13 @@ function showLoggedOutUI() {
 }
 
 function showEmailVerified() {
-    notVerifiedEmailBox.classList.add("hidden");
-    VerifiedEmailBox.classList.remove("hidden");
+    notVerifiedEmailBox.classList.add("disable");
+    VerifiedEmailBox.classList.remove("disable");
 }
 
 function showEmailNotVerified() {
-    VerifiedEmailBox.classList.add("hidden");
-    notVerifiedEmailBox.classList.remove("hidden");
+    VerifiedEmailBox.classList.add("disable");
+    notVerifiedEmailBox.classList.remove("disable");
 }
 
 window.onfocus = async () => {

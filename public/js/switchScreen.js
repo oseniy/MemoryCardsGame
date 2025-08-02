@@ -12,4 +12,5 @@ export default function switchScreen(nextScreen) {
             next.classList.remove('slide-in');
         }, { once: true });
     }, { once: true });
+    window.scrollTo({ top: 0, behavior: 'instant' }); /*фикс ресайза на айфонах */
 }
