@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ёжки-мышки</title>
+    <link rel="icon" href="/assets/1-DzcolSN_.png">
+  <script type="module" crossorigin src="/assets/index-BIGfcC64.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DeGkK5tV.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="app-wrapper">
+        <div class="screen main active" id="mainJS">
+            <div class="auth-wrapper">
+                <div class="auth" id="authAreaJS">
+                    <button class="btn font-main" data-action="signIn">Войти</button>
+                    <button class="btn font-main" data-action="signUp">Зарегистрироваться</button>
+                </div>
+                <div class="username disable" id="usernameJS">
+                    <button class="btn font-main" data-action="account"></button>
+                </div>
+            </div>
+            <h1 class="font-header">Ёжки-мышки</h1>
+            <p class="font-small-pale">Выберите уровень</p>
+            <button class="btn font-main" data-action="startEasy">Легкий</button>
+            <button class="btn font-main" data-action="startNormal">Средний</button>
+            <button class="btn font-main" data-action="startHard">Сложный</button>
+            <button class="btn font-main" data-action="leaderBoard">Лидерборд</button>
+        </div>
+        <div class="screen" id="leaderBoardJS">
+            <h1 class="font-header">Лидерборд</h1>
+            <p class="font-small-pale">Выберите уровень</p>
+            <button class="btn font-main" data-action="leaderBoardEasy">Легкий</button>
+            <button class="btn font-main" data-action="leaderBoardNormal">Средний</button>
+            <button class="btn font-main" data-action="leaderBoardHard">Сложный</button>
+            <button class="btn font-main" data-action="back">Назад</button>
+        </div>
+        <div class="screen" id="leaderBoardEasyJS">
+            <p class="text-item font-main">Легкий</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Место</p>
+                    <p class="best-score-table__element font-small text-item">Игрок</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>                                
+                <div data-selectorJS="leaderBoardTableEasy"></div>
+            </div>
+            <button class="btn font-main" data-action="leaderBoardBack">Назад</button>
+        </div>
+        <div class="screen" id="leaderBoardNormalJS">
+            <p class="text-item font-main">Средний</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Место</p>
+                    <p class="best-score-table__element font-small text-item">Игрок</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>                                
+                <div data-selectorJS="leaderBoardTableNormal"></div>
+            </div>
+            <button class="btn font-main" data-action="leaderBoardBack">Назад</button>
+        </div>
+        <div class="screen" id="leaderBoardHardJS">
+            <p class="text-item font-main">Сложный</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Место</p>
+                    <p class="best-score-table__element font-small text-item">Игрок</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>                                
+                <div data-selectorJS="leaderBoardTableHard"></div>
+            </div>
+            <button class="btn font-main" data-action="leaderBoardBack">Назад</button>
+        </div>
+        <div class="screen sign-in" id="signInJS">
+            <form action="" method="POST" id="signInFormJS">
+                <input class="" type="email" placeholder="email" id="signInEmailJS" required>
+                <input class="" type="password" placeholder="пароль" id="signInPasswdJS" required>
+                <button class="btn font-main" type="submit">Войти</button>
+            </form>
+            <button class="btn font-main" data-action="back">Назад</button>
+        </div>
+        <div class="screen sign-up" id="signUpJS">
+            <form action="" method="POST" id="signUpFormJS">
+                <input class="" type="email" placeholder="email" id="signUpEmailJS" required>
+                <input class="" type="text" placeholder="никнейм" id="signUpUsernameJS" maxlength="15" minlength="3" required>
+                <input class="" type="password" placeholder="пароль" id="signUpPasswdJS" minlength="6" required>
+                <input class="" type="password" placeholder="пароль повторно" id="signUpPasswdConfirmJS" minlength="6" required>
+                <button class="btn btn-small" type="submit">Зарегистрироваться</button>
+            </form> 
+            <button class="btn font-main" data-action="back">Назад</button>    
+        </div>
+        <div class="screen account" id="accountJS">
+            <div class="" id="notVerifiedEmailBoxJS">
+                <p class="font-small-pale">Подтвердите почту, чтобы попасть в таблицу лидеров!</p>
+                <button class="btn font-main" data-action="sendEmail">Отправить письмо для подтверждения почты</button>
+                <div class="hidden" id="EmailSentTextJS">
+                    <p class="text-item font-main">Письмо отправлено!</p>
+                    <p class="text-item font-small-pale">Проверьте папку Спам</p>
+                </div>
+            </div>
+            <div class="hidden" id="verifiedEmailBoxJS">
+                <p class="text-item font-main">Почта подтверждена!</p>
+            </div>
+            <button class="btn font-main" data-action="signOut">Выйти из аккаунта</button>
+            <p class="text-item font-main">Рекорды</p>
+            <div class="best-scores-table">
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Уровень</p>
+                    <p class="best-score-table__element font-small text-item">Жизней осталось</p>
+                    <p class="best-score-table__element font-small text-item">Времени на уровне (сек)</p>
+                </div>
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Легкий</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="HPsEasy">-</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="timeEasy">-</p>
+                </div>
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Средний</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="HPsNormal">-</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="timeNormal">-</p>
+                </div>
+                <div class="best-score-table__row">
+                    <p class="best-score-table__element font-small text-item">Сложный</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="HPsHard">-</p>
+                    <p class="best-score-table__element font-small text-item" data-selectorJS="timeHard">-</p>
+                </div>
+            </div>
+            <button class="btn font-main" data-action="back">Назад</button>
+        </div>
+        <div class="screen level" id="levelEasyJS">
+            <div class="status-bar">
+                <p class="text-item font-main" data-selectorJS="moves-counter"></p>
+                <p class="text-item font-main">Лёгкий</p>
+            </div>
+            <div class="cards layout-12"></div>
+            <div class="control-bar">
+                <button class="btn font-main" data-action="back">Назад</button>
+                <div class="level-btn-container">
+                    <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="next-level-btn">Следующий уровень</button>
+                    <button class="btn level-btn font-main" data-action="startEasy" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
+                </div>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <div class="font-header text-overlay-hidden" data-selectorJS="text-bestScoreUpdated">
+                <p>Победа!</p>
+                <p>Новый рекорд!</p>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
+        </div>
+        <div class="screen level" id="levelNormalJS">
+            <div class="status-bar">
+                <p class="text-item font-main" data-selectorJS="moves-counter"></p>
+                <p class="text-item font-main">Средний</p>
+            </div>
+            <div class="cards layout-18"></div>
+            <div class="control-bar">
+                <button class="btn font-main" data-action="back">Назад</button>
+                <div class="level-btn-container">
+                    <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="next-level-btn">Следующий уровень</button>
+                    <button class="btn level-btn font-main" data-action="startNormal" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
+                </div>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <div class="font-header text-overlay-hidden" data-selectorJS="text-bestScoreUpdated">
+                <p>Победа!</p>
+                <p>Новый рекорд!</p>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
+        </div>
+        <div class="screen level" id="levelHardJS">
+            <div class="status-bar">
+                <p class="text-item font-main" data-selectorJS="moves-counter"></p>
+                <p class="text-item font-main">Сложный</p>
+            </div>
+            <div class="cards layout-24"></div>
+            <div class="control-bar">
+                <button class="btn font-main" data-action="back">Назад</button>
+                <div class="level-btn-container">
+                    <button class="btn level-btn font-main" data-action="startHard" data-selectorJS="try-again-btn">Попробовать ещё раз</button>
+                </div>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-victory">Победа!</p>
+            <div class="font-header text-overlay-hidden" data-selectorJS="text-bestScoreUpdated">
+                <p>Победа!</p>
+                <p>Новый рекорд!</p>
+            </div>
+            <p class="font-header text-overlay-hidden" data-selectorJS="text-defeat">Поражение(</p>
+        </div>
+        <p class="text-overlay-hidden font-header" id="loadingTextJS">...</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</body>
+</html>
